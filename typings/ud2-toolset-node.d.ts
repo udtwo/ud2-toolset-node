@@ -331,7 +331,43 @@ declare module 'ud2-toolset-node' {
 		 */
 		static result: MongoResult;
 	}
-
+	/**
+	 * MongoDB 数据业务执行结果信息类
+	 * @class
+	 */
+	class MongoResultInfo {
+		/**
+		 * 创建一个 MongoDB 数据业务执行结果信息对象
+		 * @constructor
+		 * @param {string} sender 该结果的发起方
+		 * @param {StateInfo} stateInfo 状态信息对象
+		 * @param {object} [options={}] 信息参数
+		 * @param {object | Array} options.result 结果对象或集合
+		 * @param {number | null} options.count 统计数据
+		 * @param {object | null} options.render 传递原参数
+		 * @param {ObjectId | null} options.insertedId 执行新增后的新增行对应的 ObjectId
+		 * @param {Array | null} options.insertedIds 执行新增后的新增行对应的 ObjectId 集合
+		 * @param {number | null} options.insertedCount 执行新增后的新增行数
+		 * @param {number | null} options.modifiedCount 执行更新后的更新行数
+		 * @param {number | null} options.matchedCount 执行更新时的 where 条件匹配的行数
+		 * @param {number | null} options.upsertedId 执行更新并新增后的新增行对应的 ObjectId
+		 * @param {number | null} options.upsertedCount 执行更新并新增后的新增行数
+		 * @param {number | null} options.deletedCount 执行删除后的删除行数
+		 */
+		constructor(sender: string, stateInfo: StateInfo, options: {
+			result: object | Array<object>,
+			count: number | null,
+			render: object | null,
+			insertedId: mongodb['ObjectId'] | null,
+			insertedIds: Array<mongodb['ObjectId']> | null,
+			insertedCount: number | null,
+			modifiedCount: number | null,
+			matchedCount: number | null,
+			upsertedId: mongodb['ObjectId'] | null,
+			upsertedCount: number | null,
+			deletedCount: number | null
+		});
+	}
 	/**
 	 * MongoDB 运行结果参数类
 	 * @class
@@ -398,42 +434,224 @@ declare module 'ud2-toolset-node' {
 	}
 
 	/**
-	 * MongoDB 数据业务执行结果信息类
+	 * Redis 数据库操作类
 	 * @class
 	 */
-	class MongoResultInfo {
+	class RedisPlusInfo {
 		/**
-		 * 创建一个 MongoDB 数据业务执行结果信息对象
+		 * 创建一个参数对象
 		 * @constructor
-		 * @param {string} sender 该结果的发起方
-		 * @param {StateInfo} stateInfo 状态信息对象
-		 * @param {object} [options={}] 信息参数
-		 * @param {object | Array} options.result 结果对象或集合
-		 * @param {number | null} options.count 统计数据
-		 * @param {object | null} options.render 传递原参数
-		 * @param {ObjectId | null} options.insertedId 执行新增后的新增行对应的 ObjectId
-		 * @param {Array | null} options.insertedIds 执行新增后的新增行对应的 ObjectId 集合
-		 * @param {number | null} options.insertedCount 执行新增后的新增行数
-		 * @param {number | null} options.modifiedCount 执行更新后的更新行数
-		 * @param {number | null} options.matchedCount 执行更新时的 where 条件匹配的行数
-		 * @param {number | null} options.upsertedId 执行更新并新增后的新增行对应的 ObjectId
-		 * @param {number | null} options.upsertedCount 执行更新并新增后的新增行数
-		 * @param {number | null} options.deletedCount 执行删除后的删除行数
+		 * @param {object} options 信息参数
+		 * @param {string | null} [connectName='default'] 连接名称
+		 * @param {string} host 服务器 IP 地址
+		 * @param {string} port 服务器端口号
+		 * @param {string} password 服务器密码
+		 * @param {number} [db=0] 待操作的数据库编号
 		 */
-		constructor(sender: string, stateInfo: StateInfo, options: {
-			result: object | Array<object>,
-			count: number | null,
-			render: object | null,
-			insertedId: mongodb['ObjectId'] | null,
-			insertedIds: Array<mongodb['ObjectId']> | null,
-			insertedCount: number | null,
-			modifiedCount: number | null,
-			matchedCount: number | null,
-			upsertedId: mongodb['ObjectId'] | null,
-			upsertedCount: number | null,
-			deletedCount: number | null
+		constructor(options: {
+			connectName: string,
+			host: string,
+			port: string,
+			password: string,
+			db: number
 		});
 	}
+	/**
+	 * Redis 数据库操作类
+	 * @class
+	 */
+	class RedisPlus {
+		/**
+		 * 创建一个数据库操作对象
+		 * @constructor
+		 * @param {RedisPlusInfo} redisPlusInfo 数据库连接对象
+		 */
+		constructor();
+
+		/**
+		 * 设置当前客户端所操作的数据库的存储容器编号
+		 * @async
+		 * @param {string | number} no 容器编号
+		 * @returns {string} 返回状态值，可能为 null
+		 */
+		select(no: string): Promise<string>;
+		/**
+		 * 设置 key 的过期时间，以秒计
+		 * @async
+		 * @param {string} key 数据键
+		 * @param {number} second 过期时间，以秒计
+		 * @returns {number} 返回通过 key 是否成功设置过期时间
+		 */
+		expire(key: string, second: number): Promise<number>;
+		/**
+		 * 通过 UNIX 时间戳的参数方式设置 key 的过期时间
+		 * @async
+		 * @param {string} key 数据键
+		 * @param {number} timestamp 过期时间，UNIX 时间戳
+		 * @returns {number} 返回通过 key 是否成功设置过期时间
+		 */
+		expireat(key: string, timestamp: number): Promise<number>;
+		/**
+		 * 设置 key 的过期时间，以秒计
+		 * @async
+		 * @param {string} key 数据键
+		 * @param {number} milliseconds 过期时间，以秒计
+		 * @returns {number} 返回通过 key 是否成功设置过期时间
+		 */
+		pexpire(key: string, milliseconds: number): Promise<number>;
+		/**
+		 * 通过 UNIX 时间戳(毫秒级)的参数方式设置 key 的过期时间
+		 * @async
+		 * @param {string} key 数据键
+		 * @param {number} millisecondsTimestamp 过期时间，UNIX 时间戳(毫秒级)
+		 * @returns {number} 返回通过 key 是否成功设置过期时间
+		 */
+		pexpireat(key: string, millisecondsTimestamp: number): Promise<number>;
+		/**
+		 * 移除 key 的过期时间，key 将永久保持
+		 * @async
+		 * @param {string} key 数据键
+		 * @returns {number} 返回通过 key 是否成功移除过期时间
+		 */
+		persist(key: string): Promise<number>;
+		/**
+		 * 查询 key 的剩余生存时间
+		 * @async
+		 * @param {string} key 数据键
+		 * @returns {number} 返回 key 的剩余生存时间，-1 为永久保持
+		 */
+		ttl(key: string): Promise<number>;
+		/**
+		 * 查询 key 的剩余生存时间
+		 * @async
+		 * @param {string} key 数据键
+		 * @returns {number} 返回 key 的剩余生存时间(毫秒级)，-1 为永久保持
+		 */
+		pttl(key: string): Promise<number>;
+		/**
+		 * 返回一个随机的 key
+		 * @async
+		 * @returns {string} 返回一个随机的 key
+		 */
+		randomkey(): Promise<string>;
+		/**
+		 * 通过 pattern 获取符合要求的 key 集合
+		 * @async
+		 * @param {string} pattern 匹配参数
+		 * @returns {Array} 返回符合要求的 key 集合
+		 */
+		keys(pattern: string): Promise<Array<string>>;
+		/**
+		 * 通过 key 获取数据库容器的数据类型
+		 * @async
+		 * @param {string} key 数据键
+		 * @returns {string} 返回通过 key 获取数据库容器的数据类型
+		 */
+		type(key: string): Promise<string>;
+		/**
+		 * 通过 key 删除指定键值
+		 * @async
+		 * @param {string} key 数据键
+		 * @returns {number} 返回通过 key 是否删除掉键值
+		 */
+		del(key: string): Promise<number>;
+		/**
+		 * 通过 key 判断指定键是否存在
+		 * @async
+		 * @param {string} key 数据键
+		 * @returns {number} 返回通过 key 是否查找到对应的键值
+		 */
+		exists(key: string): Promise<number>;
+		/**
+		 * 通过 key 转移当前键值所在的数据库
+		 * @async
+		 * @param {string} key 数据键
+		 * @param {string | number} no
+		 * @returns {number} 返回通过 key 是否成功转移到指定数据库
+		 */
+		move(key: string, db: string | number): Promise<number>;
+
+		/**
+		 * 迭代并通过 pattern 获取符合要求的 key 集合
+		 * @async
+		 * @param {string} pattern 匹配参数
+		 * @param {number} count 数据集中返回的元素数量
+		 * @returns {Array} 返回符合要求的 key 集合
+		 */
+		scanKeys(pattern: string, count: number): Promise<Array<string>>;
+
+		/**
+		 * 通过 key 获取数据库容器内的指定数据
+		 * @async
+		 * @param {string} key 数据键
+		 * @returns {string} 返回通过 key 获取到的对应的 value
+		 */
+		get(key: string): Promise<string>;
+		/**
+		 * 通过 key 设置数据库容器内的指定数据值
+		 * @async
+		 * @param {string} key 数据键
+		 * @param {string | number | boolean} value 数据值
+		 * @returns {string} 返回执行后的状态，'OK'代表执行完成
+		 */
+		set(key: string): Promise<string>;
+		/**
+		 * 通过 key 获取当前数据值并设置新的数据值
+		 * @async
+		 * @param {string} key 数据键
+		 * @param {string | number | boolean} value 数据值
+		 * @returns {string} 返回设置前的旧值
+		 */
+		getset(key: string): Promise<string>;
+		/**
+		 * 通过 key 将新值追加到原值后
+		 * @async
+		 * @param {string} key 数据键
+		 * @param {string | number | boolean} value 数据值
+		 * @returns {number} 返回追加后的值的长度
+		 */
+		append(key: string, value: string | number | boolean): Promise<number>;
+
+		/**
+		 * 通过 key 对应值的数字值增 1
+		 * @async
+		 * @param {string} key 数据键
+		 * @returns {number} 返回增量后的结果
+		 */
+		incr(key: string): Promise<number>;
+		/**
+		 * 通过 key 对应值的数字值增加给定的增量
+		 * @async
+		 * @param {string} key 数据键
+		 * @param {number} increment 增量
+		 * @returns {number} 返回增量后的结果
+		 */
+		incrby(key: string): Promise<number>;
+		/**
+		 * 通过 key 对应值的数字值增 1
+		 * @async
+		 * @param {string} key 数据键
+		 * @returns {number} 返回增量后的结果
+		 */
+		decr(key: string): Promise<number>;
+		/**
+		 * 通过 key 对应值的数字值减少给定的增量
+		 * @async
+		 * @param {string} key 数据键
+		 * @param {number} increment 减量
+		 * @returns {number} 返回减量后的结果
+		 */
+		decrby(key: string): Promise<number>;
+		/**
+		 * 通过 key 对应值的数字值增 1
+		 * @async
+		 * @param {string} key 数据键
+		 * @returns {number} 返回增量后的结果
+		 */
+		incrbyfloat(key: string): Promise<number>;
+
+	}
+
 	/**
 	 * 状态信息类
 	 * @class
