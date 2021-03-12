@@ -1,9 +1,90 @@
+import AJAXArgsChecker from "../valueHandler/AjaxArgsChecker";
+
 declare module 'ud2-toolset-node' {
 	class mongodb {
 		ObjectId: object;
 		ClientSession: object;
 		MongoClient: object;
 	}
+	class express {
+		Router: object;
+		Response: object;
+		Request: object;
+	}
+
+	/**
+	* 控制器基础类
+	* @class
+	*/
+	class Controller {
+		/**
+		 * 构造方法
+		 * @constructor
+		 * @param {string} controllerName 控制器名称
+		 * @param {object} [options={}] 操作选项
+		 * @param {AJAXArgsChecker} [deriveChecker=null] 派生检测器类
+		 * @param {object} [deriveState=null] 派生状态对象
+		 */
+		constructor(controllerName: string, options: {
+			deriveChecker: AJAXArgsChecker,
+			deriveState: object
+		});
+
+		/**
+		 * 控制器创建
+		 * @param {function} createrCallback 创建器回调
+		 * @returns { express.Router } 返回路由对象
+		 */
+		create(createrCallback: Function): express['Router'];
+
+		/**
+		 * 获取 Router 路由对象
+		 * @returns {express.Router} 返回路由对象
+		 */
+		getRouter(): express['Router'];
+	}
+
+	/**
+	* 响应处理类
+	* @class
+	*/
+	class InteractHandler {
+
+		/**
+		 * 自定义响应输出对象
+		 * @static
+		 * @param {express.Response} res Response 对象
+		 * @param {StateInfo | MongoResultInfo} info 状态对象
+		 * @param {object} [render={}] 递交业务结果对象
+		 */
+		static render(res: express['Response'], info: StateInfo | MongoResultInfo, render: object): void;
+
+		/**
+		 * 错误响应输出对象
+		 * @static
+		 * @param {express.Response} res Response 对象
+		 * @param {StateInfo | MongoResultInfo} info 状态对象
+		 * @param {object} [render={}] 递交业务结果对象
+		 */
+		static error(res: express['Response'], info: StateInfo | MongoResultInfo, render: object): void;
+
+		/**
+		* 基于 MongoResultInfo 的列表响应输出对象
+		* @param {express.Response} res Response 对象
+		* @param {MongoResultInfo} info MongoResultInfo 状态对象
+		*/
+		static list(res: express['Response'], info: MongoResultInfo): void;
+
+		/**
+		* 基于 MongoResultInfo 的页码列表响应输出对象
+		* @param {express.Response} res Response 对象
+		* @param {object} pageInfo 页码对象
+		* @param {MongoResultInfo} info MongoResultInfo 状态对象
+		*/
+		static pageList(res: express['Response'], pageInfo: object, info: MongoResultInfo): void;
+
+	}
+	
 
 	/**
 	 * MongoDB 创建数据库操作相关参数类
