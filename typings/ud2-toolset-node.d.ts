@@ -1,5 +1,3 @@
-import AJAXArgsChecker from "../valueHandler/AjaxArgsChecker";
-
 declare module 'ud2-toolset-node' {
 	class mongodb {
 		ObjectId: object;
@@ -11,22 +9,23 @@ declare module 'ud2-toolset-node' {
 		Response: object;
 		Request: object;
 	}
+	class Decimal {}
 
 	/**
-	* 控制器基础类
-	* @class
-	*/
+	 * 控制器基础类
+	 * @class
+	 */
 	class Controller {
 		/**
 		 * 构造方法
 		 * @constructor
 		 * @param {string} controllerName 控制器名称
-		 * @param {object} [options={}] 操作选项
-		 * @param {AJAXArgsChecker} [deriveChecker=null] 派生检测器类
+		 * @param {object} [options={}] 操作选项 
+		 * @param {AjaxArgsChecker} [deriveChecker=null] 派生检测器类
 		 * @param {object} [deriveState=null] 派生状态对象
 		 */
 		constructor(controllerName: string, options: {
-			deriveChecker: AJAXArgsChecker,
+			deriveChecker: AjaxArgsChecker,
 			deriveState: object
 		});
 
@@ -45,10 +44,10 @@ declare module 'ud2-toolset-node' {
 	}
 
 	/**
-	* 响应处理类
-	* @class
-	*/
-	class InteractHandler {
+	 * 响应处理类
+	 * @class
+	 */
+	class ResponseHandler {
 
 		/**
 		 * 自定义响应输出对象
@@ -69,22 +68,197 @@ declare module 'ud2-toolset-node' {
 		static error(res: express['Response'], info: StateInfo | MongoResultInfo, render: object): void;
 
 		/**
-		* 基于 MongoResultInfo 的列表响应输出对象
-		* @param {express.Response} res Response 对象
-		* @param {MongoResultInfo} info MongoResultInfo 状态对象
-		*/
+		 * 基于 MongoResultInfo 的列表响应输出对象
+		 * @param {express.Response} res Response 对象
+		 * @param {MongoResultInfo} info MongoResultInfo 状态对象
+		 */
 		static list(res: express['Response'], info: MongoResultInfo): void;
 
 		/**
-		* 基于 MongoResultInfo 的页码列表响应输出对象
-		* @param {express.Response} res Response 对象
-		* @param {object} pageInfo 页码对象
-		* @param {MongoResultInfo} info MongoResultInfo 状态对象
-		*/
+		 * 基于 MongoResultInfo 的页码列表响应输出对象
+		 * @param {express.Response} res Response 对象
+		 * @param {object} pageInfo 页码对象
+		 * @param {MongoResultInfo} info MongoResultInfo 状态对象
+		 */
 		static pageList(res: express['Response'], pageInfo: object, info: MongoResultInfo): void;
 
 	}
-	
+
+	/**
+	 * 页处理类
+	 * @class
+	 */
+	class PageHandler {
+
+		/**
+		 * 获取 request.body 中是否含有属性
+		 * @param {object} data request.body 对象
+		 * @returns {number} 属性数目
+		 */
+		static getDataAttrCount(data: object): number;
+
+		/**
+		 * 页码信息
+		 * @param {object} page 页码对象
+		 * @param {number} allCount 数据数据
+		 * @returns {object} pageInfo 对象
+		 */
+		static pageInfo(page: object, allCount: number): object;
+
+		/**
+		 * 页数据处理
+		 * @param {express.Request} req Request 请求对象
+		 * @returns {object} pageInfo 对象
+		 */
+		static pageData(req: express['Request']): object;
+
+	}
+
+	/**
+	 * 交互处理类
+	 * 用户处理请求、响应、会话等相关交互项目
+	 */
+	class InteractHandler {
+
+	}
+
+	/**
+	 * 路由处理类
+	 * @class
+	 */
+	class RouterHandler {
+
+		/**
+		 * 基础访问路由创建
+		 * @param {object[]} pathSet 路径规则设定
+		 * @param {string} pathSet[].visit 访问路径
+		 * @param {string} pathSet[].view 需呈现的页面路径
+		 * @param {object} renderOptions 页面呈现处理配置参数
+		 * @param {express.Express} [renderOptions.app=null] Express 对象
+		 * @param {string} [renderOptions.appUsePath=null] 首要访问路径
+		 * @param {object} [renderOptions.options={}] 呈现页面过程中向页面传递的参数对象
+		 * @param {string} [renderOptions.preViewPath=''] 页面路径中的前置路径
+		 * @param {function(express.Request, express.Response):boolean} [renderOptions.preCallback=NoopByTrue] 页面处理的前置回调 如果为false 则不执行页面呈现
+		 * @returns {express.Router} 路由对象
+		 */
+		static routerBaseCreate(pathSet: Array<{
+			visit: string,
+			view: string
+		}>, renderOptions: {
+			app?: express,
+			appUsePath?: string,
+			options: object,
+			preViewPath: string,
+			preCallback: boolean
+		}): express['Router'];
+
+		/**
+		 * 参数访问路由创建
+		 * @param {string} preVisitPath 前置访问路径
+		 * @param {object[]} pathParams 路径参数集合
+		 * @param {object} renderOptions 页面呈现处理配置参数
+		 * @param {express.Express} [renderOptions.app=null] Express 对象
+		 * @param {string} [renderOptions.appUsePath=null] 首要访问路径
+		 * @param {object} [renderOptions.options={}] 呈现页面过程中向页面传递的参数对象
+		 * @param {string} [renderOptions.preViewPath=''] 页面路径中的前置路径
+		 * @param {function(express.Request, express.Response):boolean} [renderOptions.preCallback=NoopByTrue] 页面处理的前置回调 如果为false 则不执行页面呈现
+		 * @returns {express.Router} 路由对象
+		 */
+		static routerParamsCreate(preVisitPath: string, pathParams: object, renderOptions: {
+			app?: express,
+			appUsePath?: string,
+			options: object,
+			preViewPath: string,
+			preCallback: boolean
+		}): express['Router'];
+
+		/**
+		 * 控制器路由创建
+		 * @param {controller} controller 控制器对象
+		 * @param {object} renderOptions 页面呈现处理配置参数
+		 * @param {express.Express} [renderOptions.app=null] Express 对象
+		 * @param {string} [renderOptions.appUsePath=null] 首要访问路径
+		 * @returns {express.Router} 路由对象
+		 */
+		static routerControllerCreate(): express['Router'];
+
+	}
+
+	/**
+	 * 模型创建器
+	 * @class
+	 */
+	class ModelCreater {
+
+		/**
+		 * 创建一个模型创建器
+		 * @constructor
+		 * @param {string} name 模型名称
+		 * @param {object} cols 模型属性对象集合
+		 * @param {object} options 模型配置参数
+		 * @param {string} options.realName 模型在数据库中名称，如为 null 则名称同 name
+		 * @param {string} options.version 模型的版本号
+		 */
+		constructor(controllerName: string, cols: object, options: {
+			realName: string,
+			version: string
+		})
+
+		/**
+		 * 获取模型列对象集合
+		 * @returns {object} 返回该模型的列对象集合
+		 */
+		getModelCols(): object;
+
+		/**
+		 * 模型的参数值检测方法
+		 * @param {object} data 待检测的参数值数据
+		 * @param {object} [option={}] 检测参数
+		 * @param {string} [option.checkModelMode=CheckModelModeEnum.modelFull] 检测模型参数的方式
+		 * @param {string} [option.checkValueMode=null] 检测模型参数值的方式
+		 * @return {object} 检测后的参数值数据，如果检测失败，并且检测参数中有返回报告设置，则返回错误对象
+		 */
+		getModelCols(data: object, option: {
+			checkModelMode: string,
+			checkValueMode?: string
+		}): object;
+
+		/**
+		 * 模型的参数值检测方法
+		 * @param {object} data 待检测的参数值数据
+		 * @param {object} [option={}] 检测参数
+		 * @param {string} [option.checkModelMode=CheckModelModeEnum.modelFull] 检测模型参数的方式
+		 * @param {string} [option.checkValueMode=null] 检测模型参数值的方式
+		 * @return {object} 检测后的参数值数据，如果检测失败，并且检测参数中有返回报告设置，则返回错误对象
+		 */
+		valueCheck(data: object, option: {
+			checkModelMode: string,
+			checkValueMode?: string
+		}): object;
+
+		/**
+		 * 通过传入的参数值数据创建一个模型数据对象
+		 * @param {object} data 待检测的参数值数据
+		 * @param {object} [option={}] 检测参数
+		 * @param {string} [option.checkModelMode=CheckModelModeEnum.modelFull] 检测模型参数的方式
+		 * @param {string} [option.checkValueMode=null] 检测模型参数值的方式
+		 * @return {object} 模型数据对象，如果检测失败，并且检测参数中有返回报告设置，则返回错误对象
+		 */
+		create(data: object, option: {
+			checkModelMode: string,
+			checkValueMode?: string
+		}): object;
+
+		/**
+		 * 通过传入的参数值数据创建一个模型数据对象
+		 * 该模型模型参数检测方式为 modelPart，即通过传入模型参数返回只含有部分属性的模型，而非补全模型属性
+		 * @param {object} data 待检测的参数值数据
+		 * @param {string} [checkValueMode=CheckValueModeEnum.failToDefault] 检测模型参数值的方式
+		 * @return {object} 模型数据对象，如果检测失败，并且检测参数中有返回报告设置，则返回错误对象
+		 */
+		createPart(data: object, checkValueMode: string): object;
+
+	}
 
 	/**
 	 * MongoDB 创建数据库操作相关参数类
@@ -119,7 +293,6 @@ declare module 'ud2-toolset-node' {
 			transactionSleepTime: number
 		});
 	}
-
 	/**
 	 * MongoDB 数据库操作
 	 * @class
@@ -758,9 +931,437 @@ declare module 'ud2-toolset-node' {
 		 */
 		getToConsole(): void;
 		/**
-		* 状态信息类型枚举
-		*/
+		 * 状态信息类型枚举
+		 */
 		static type: Enumerator;
+	}
+	/**
+	 * 状态管理者类
+	 * @class
+	 */
+	class StateManager {
+
+		/**
+		 * 新增状态信息
+		 * @param {string | number} no 状态编号
+		 * @param {string} text 状态描述
+		 * @param {number} type 状态类型
+		 * @param {string} [aliasName=null] 状态信息别名
+		 */
+		stateInfoAdd(no: string, text: string, type: number, aliasName?: string): void;
+		/**
+		 * 编辑状态信息
+		 * @param {string | number} no 状态编号
+		 * @param {string} text 状态描述
+		 * @param {Enumerator} [type=null] 状态类型
+		 */
+		stateInfoChange(no: string | number, text: string, type?: Enumerator | null): void;
+
+		/**
+		 * 移除状态信息
+		 * @param {string | number} no 状态编号
+		 */
+		stateInfoRemove(no: string | number): void;
+
+	}
+
+	/**
+	* 提交检测器类
+	* @class
+	*/
+	class AjaxArgsChecker {
+
+		/**
+		 * 检测容器中是否包含错误对象
+		 * @returns {boolean} 返回容器中是否包含错误对象
+		 */
+		hasError(): boolean;
+
+		/**
+		 * 检测容器中错误数量是否为 0
+		 * @returns {boolean} 返回容器中错误数量是否为 0
+		 */
+		noError(): boolean;
+
+		/**
+		 * 判断传入值是否符合 ObjectId 规则
+		 * @param {any} value 待检测的值
+		 * @param {object} [options={}] 判断参数
+		 * @param {string | null} [options.field=null] 字段信息
+		 * @param {string} [options.errorText='id错误'] 错误文本
+		 * @returns {boolean} 返回是否符合检测结果
+		 */
+		checkObjectId(value: any, options?: {
+			field?: string | null,
+			errorText?: string
+		}): boolean;
+
+		/**
+		 * 字符串长度检测
+		 * @param {any} value 待检测的值
+		 * @param {object} [options={}] 判断参数
+		 * @param {number} [options.des=null] 固定长度检测
+		 * @param {number} [options.min=null] 最小长度检测
+		 * @param {number} [options.max=null] 最大长度检测
+		 * @param {string | null} [options.field=null] 字段信息
+		 * @param {string} [options.errorText='字符串长度错误'] 错误文本
+		 * @returns {boolean} 返回是否符合检测结果
+		 * @example
+		 * checkStringLength(value, { des: ? }); 固定长度检测
+		 * checkStringLength(value, { min: ? }); 最小长度检测
+		 * checkStringLength(value, { max: ? }); 最大长度检测
+		 * checkStringLength(value, { min: ?, max: ? }); 长度范围检测
+		 */
+		checkStringLength(value: any, options?: {
+			des?: number,
+			min?: number,
+			max?: number,
+			field?: string | null, 
+			errorText: string
+		}): boolean;
+
+		/**
+		 * 数值检测
+		 * @param {any} value 待检测的值
+		 * @param {object} [options={}] 判断参数
+		 * @param {number} [options.min=null] 最小值
+		 * @param {number} [options.max=null] 最大值
+		 * @param {string | null} [options.field=null] 字段信息
+		 * @param {string} [options.errorText='数值及范围错误'] 错误文本
+		 * @returns {boolean} 返回是否符合检测结果
+		 * @example
+		 * checkNumber(value); 数值检测
+		 * checkNumber(value, { min: ? }); 数值最小值检测
+		 * checkNumber(value, { max: ? }); 数值最大值检测
+		 * checkNumber(value, { min: ?, max: ? }); 数值范围检测
+		 */
+		checkNumber(value: any, options?: {
+			min?: number,
+			max?: number,
+			field?: string | null, 
+			errorText?: string
+		}): boolean;
+
+		/**
+		 * Decimal 数值检测
+		 * @param {any} value 待检测的值
+		 * @param {object} [options={}] 判断参数
+		 * @param {number} [options.min=null] 最小值
+		 * @param {number} [options.max=null] 最大值
+		 * @param {string | null} [options.field=null] 字段信息
+		 * @param {string} [options.errorText='数值及范围错误'] 错误文本
+		 * @returns {boolean} 返回是否符合检测结果
+		 */
+		checkDecimal(value: any, options?: {
+			min?: number,
+			max?: number,
+			field?: string | null
+			errorText?: string
+		}): boolean;
+
+		/**
+		 * 日期检测
+		 * @param {any} value 待检测的值
+		 * @param {object} [options={}] 判断参数
+		 * @param {string | null} [options.field=null] 字段信息
+		 * @param {string} [options.errorText='日期格式错误'] 错误文本
+		 * @returns {boolean} 返回是否符合检测结果
+		 */
+		checkDate(value: any, field?: string | null, options?: {
+			errorText: string
+		}): boolean;
+
+		/**
+		 * 参数取值范围检测
+		 * @param {any} value 待检测的值
+		 * @param {object} [options={}] 判断参数
+		 * @param {Array<any>} [options.valueRange=[]] 参数取值范围
+		 * @param {string | null} [options.field=null] 字段信息
+		 * @param {string} [options.errorText='范围内无此值'] 错误文本
+		 * @returns {boolean} 返回是否符合检测结果
+		 */
+		checkByRange(value: any, valueRange: Array<any>, field?: string | null, options?: {
+			errorText: string
+		}): boolean;
+
+		/**
+		 * 参数正则范围检测
+		 * @param {any} value 待检测的值
+		 * @param {object} [options={}] 判断参数
+		 * @param {RegExp} [options.regex=Utils.RegexRule.all] 参数取值范围
+		 * @param {string | null} [options.field=null] 字段信息
+		 * @param {string} [options.errorText='值不符合正则表达式'] 错误文本
+		 * @returns {boolean} 返回是否符合检测结果
+		 */
+		checkByRegex(value: any, regex: RegExp, field?: string | null, options?: {
+			errorText: string
+		}): boolean;
+
+		/**
+		 * 手机号格式检测
+		 * @param {any} value 待检测的值
+		 * @param {object} [options={}] 判断参数
+		 * @param {string | null} [options.field=null] 字段信息
+		 * @param {string} [options.errorText='手机格式错误'] 错误文本
+		 * @returns {boolean} 返回是否符合检测结果
+		 */
+		checkPhone(value: any, field?: string | null, options?: {
+			errorText: string
+		}): boolean;
+
+		/**
+		 * 电话号格式检测
+		 * @param {any} value 待检测的值
+		 * @param {object} [options={}] 判断参数
+		 * @param {string | null} [options.field=null] 字段信息
+		 * @param {string} [options.errorText='电话格式错误'] 错误文本
+		 * @returns {boolean} 返回是否符合检测结果
+		 */
+		checkTelephone(value: any, field?: string | null, options?: {
+			errorText: string
+		}): boolean;
+
+		/**
+		 * 邮编格式检测
+		 * @param {any} value 待检测的值
+		 * @param {string | null} [field=null] 字段信息
+		 * @param {object} [options={}] 判断参数
+		 * @param {string} [options.errorText='邮编格式错误'] 错误文本
+		 * @returns {boolean} 返回是否符合检测结果
+		 */
+		checkMail(value: any, field?: string | null, options?: {
+			errorText: string
+		}): boolean;
+
+		/**
+		 * 邮编格式检测
+		 * @param {any} value 待检测的值
+		 * @param {string | null} [field=null] 字段信息
+		 * @param {object} [options={}] 判断参数
+		 * @param {string} [options.errorText='邮编格式错误'] 错误文本
+		 * @returns {boolean} 返回是否符合检测结果
+		 */
+		checkZipCode(value: any, field?: string | null, options?: {
+			errorText: string
+		}): boolean;
+
+	}
+	/**
+	 * 常用值转换类
+	 * @class
+	 */
+	class Converter {
+		/**
+		 * 将参数强制转换为 ObjectId
+		 * @static
+		 * @param {object} value 待转换的值
+		 * @param {object} [defaultValue=null] 若无法转换，则返回此值
+		 * @returns {ObjectId} 返回转换后的值，若无法转换，则返回 defaultValue
+		 */
+		static toObjectId(value: object, defaultValue?: object): mongodb['ObjectId'];
+
+		/**
+		 * 将参数强制转换为 Number
+		 * @param {object} value 待转换的值
+		 * @param {object} [defaultValue=null] 若无法转换，则返回此值
+		 * @returns {Number} 返回转换后的值，若无法转换，则返回 defaultValue
+		 */
+		static toNumber(value: object, defaultValue?: object): Number;
+
+		/**
+		 * 将参数强制转换为 Decimal
+		 * @param {object} value 待转换的值
+		 * @param {object} [defaultValue=null] 若无法转换，则返回此值
+		 * @returns {Decimal} 返回转换后的值，若无法转换，则返回 defaultValue
+		 */
+		static toDecimal(value: object, defaultValue?: object): Decimal;
+
+		/**
+		 * 将参数转换为助记码
+		 * @param {string} value 待转换的值
+		 * @returns {string} 返回转换后的助记码
+		 */
+		static toHelpCode(value: string): string;
+
+	}
+
+	/**
+	 * 字符串处理类
+	 * @class
+	 */
+	class StringHandler {
+
+		/**
+		 * 将字符串加密
+		 * @static
+		 * @param {string} text 待加密字符串
+		 * @param {object} [options={}] 加密参数
+		 * @param {string} options.digest 加密类型
+		 * @param {string} options.saleBefore 加盐前缀
+		 * @param {string} options.saleAfter 加盐后缀
+		 * @returns {string} 加密后的文本
+		 */
+		static passToMD5(text: string, options: {
+			digest: string,
+			saleBefore: string,
+			saleAfter: string
+		}): string;
+
+		/**
+		 * 判断字符串是否为空或空字符串
+		 * @static
+		 * @param {string} text 待判断的字符串
+		 * @returns {boolean} 返回是否为空 
+		 */
+		static isEmpty(text: string): boolean;
+
+		/**
+		 * 判断字符串是否有效
+		 * @static
+		 * @param {string} text 待判断的字符串
+		 * @returns {boolean} 返回是否有效
+		 */
+		static isValid(text: string): boolean;
+
+		/**
+		 * 将16进制字符串转为36进制
+		 * 其中转换前的16进制字符串为小写
+		 * @static
+		 * @param {string} text 待转换的16进制字符串
+		 * @returns {string | null} 转换后的36进制字符串，当无法转换时返回 null
+		 */
+		static hexToShort(text: string): string | null;
+
+	}
+	/**
+	* 字符串进制转换
+	* @class
+	*/
+	class StringHexConverter {
+
+		/**
+		 * 构造进制转换类，并设定转换规则
+		 * @constructor
+		 * @param {string} srcAlphabet 转换前的进制序列
+		 * @param {string} dstAlphabet 转换后的进制序列
+		 */
+		constructor(srcAlphabet: string, dstAlphabet: string);
+
+		/**
+		 * 将传入值转换为指定规则的值
+		 * @param {string} number 待转换的值
+		 * @returns {string | null} 转换后的值，无法转换时返回 null
+		 */
+		convert(number: string): string | null;
+
+		/**
+		 * 验证字符串是否符合转换前规则
+		 * @param {string} number 待验证的字符串
+		 * @returns {boolean} 验证结果
+		 */
+		isValid(number: string): boolean;
+
+	}
+
+	/**
+	 * 类型检测类
+	 * @class
+	 */
+	class TypeChecker {
+
+		/**
+		 * 判断类型
+		 * @static
+		 * @param {object} type 待判断类型的对象
+		 * @returns {boolean} 返回一个方法，此方法用来判断传入的对象是否为指定的参数 [type] 类型 
+		 */
+		static isType(type: object): boolean;
+
+		/**
+		 * 判断传入参数值的类型是否为 Object
+		 * @static
+		 * @param {any} value
+		 * @returns {boolean} 返回参数类型是否为 Object
+		 */
+		static isObject(value: any): boolean;
+
+		/**
+		 * 判断传入参数值的类型是否为 Function
+		 * @static
+		 * @param {any} value
+		 * @returns {boolean} 返回参数类型是否为 Function
+		 */
+		static isFunction(value: any): boolean;
+
+		/**
+		 * 判断传入参数值的类型是否为 String
+		 * @static
+		 * @param {any} value
+		 * @returns {boolean} 返回参数类型是否为 String
+		 */
+		static isString(value: any): boolean;
+
+		/**
+		 * 判断传入参数值的类型是否为 boolean
+		 * @static
+		 * @param {any} value
+		 * @returns {boolean} 返回参数类型是否为 boolean
+		 */
+		static isboolean(value: any): boolean;
+
+		/**
+		 * 判断传入参数值的类型是否为 Number
+		 * @static
+		 * @param {any} value
+		 * @returns {boolean} 返回参数类型是否为 Number
+		 */
+		static isNumber(value: any): boolean;
+
+		/**
+		 * 判断传入参数值的类型是否为 Array
+		 * @static
+		 * @param {any} value
+		 * @returns {boolean} 返回参数类型是否为 Array
+		 */
+		static isArray(value: any): boolean;
+
+		/**
+		 * 判断传入参数值的类型是否为 Date
+		 * @static
+		 * @param {any} value
+		 * @returns {boolean} 返回参数类型是否为 Date
+		 */
+		static isDate(value: any): boolean;
+
+		/**
+		 * 判断传入参数值的类型是否为 RegExp
+		 * @static
+		 * @param {any} value
+		 * @returns {boolean} 返回参数类型是否为 RegExp
+		 */
+		static isRegExp(value: any): boolean;
+
+	}
+	/**
+	 * 值检测类
+	 * @class
+	 */
+	class ValueChecker {
+
+		/**
+		 * 检测传入值是否为 undefined 或 null
+		 * @param {any} value 待检测的值
+		 *  @returns {boolean} 返回检测结果
+		 */
+		static isUndefinedOrNull(value: any): boolean;
+
+		/**
+		 * 检测传入值是否为 undefined
+		 * @param {any} value 待检测的值
+		 *  @returns {boolean} 返回检测结果
+		 */
+		static isUndefined(value: any): boolean;
+
 	}
 
 }
