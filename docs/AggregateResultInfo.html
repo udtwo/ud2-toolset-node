@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Global - Documentation</title>
+    <title>AggregateResultInfo - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Global</h1>
+    <h1 class="page-title">AggregateResultInfo</h1>
     
 
     
@@ -42,8 +42,11 @@
 <header>
     
         <h2>
-        
+        AggregateResultInfo
         </h2>
+        
+            <div class="class-description"><p>聚合对象
+通过执行聚合管道流程后生成的聚合对象</p></div>
         
     
 </header>
@@ -52,8 +55,24 @@
     <div class="container-overview">
     
         
+<div class="section-method">
 
-        
+    
+    <h2>Constructor</h2>
+    
+
+    <h4 class="name" id="AggregateResultInfo"><span class="type-signature"></span>new AggregateResultInfo<span class="signature">(cursor)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>创建一个聚合对象</p>
+</div>
+
+
+
 
 
 <dl class="details">
@@ -92,7 +111,80 @@
 </dl>
 
 
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
         
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>cursor</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>AggregationCursor</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>聚合游标</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
     
     </div>
 
@@ -107,109 +199,27 @@
     
 
     
-        <h3 class="subsection-title">Members</h3>
+
+    
+        <h3 class="subsection-title">Methods</h3>
 
         
             
-<div class="section-members">
-<h4 class="name" id="CheckModelModeEnum"><span class="type-signature">(constant) </span>CheckModelModeEnum<span class="type-signature"></span></h4>
+<div class="section-method">
 
+    
+
+    <h4 class="name" id="find"><span class="type-signature">(async) </span>find<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="MongoResultInfo.html">MongoResultInfo</a>}</span></h4>
+
+    
 
 
 
 <div class="description">
-    <p>检测模型参数的方式枚举</p>
+    <p>返回聚合后得到的数据集
+并输出为 MongoResultInfo</p>
 </div>
 
-
-
-
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>modelFull</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>按模型所有参数进行检测</p></td>
-        </tr>
-
-        
-
-    
-
-        <tr>
-            
-                <td class="name"><code>modelPart</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>按传入参数进行检测</p></td>
-        </tr>
-
-        
-
-    
-
-        <tr>
-            
-                <td class="name"><code>none</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>跳过检测</p></td>
-        </tr>
-
-        
-
-    
-    </tbody>
-</table>
 
 
 
@@ -255,109 +265,65 @@
 
 
 
-</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
 
         
-            
-<div class="section-members">
-<h4 class="name" id="CheckValueModeEnum"><span class="type-signature">(constant) </span>CheckValueModeEnum<span class="type-signature"></span></h4>
 
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code><a href="MongoResultInfo.html">MongoResultInfo</a></code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>返回聚合后得到的数据集，并输出响应的结果对象</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="findOne"><span class="type-signature">(async) </span>findOne<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="MongoResultInfo.html">MongoResultInfo</a>}</span></h4>
+
+    
 
 
 
 <div class="description">
-    <p>检测模型参数值的方式枚举</p>
+    <p>返回聚合后得到的单条数据
+并输出为 MongoResultInfo</p>
 </div>
 
-
-
-
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>failToDefault</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>值全部检测，未通过检测的值将被默认值取代</p></td>
-        </tr>
-
-        
-
-    
-
-        <tr>
-            
-                <td class="name"><code>failToReport</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>值全部检测，未通过检测将报告错误</p></td>
-        </tr>
-
-        
-
-    
-
-        <tr>
-            
-                <td class="name"><code>none</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>值不做检测</p></td>
-        </tr>
-
-        
-
-    
-    </tbody>
-</table>
 
 
 
@@ -403,169 +369,64 @@
 
 
 
-</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
 
         
-            
-<div class="section-members">
-<h4 class="name" id="StateInfoTypeEnum"><span class="type-signature">(constant) </span>StateInfoTypeEnum<span class="type-signature"></span></h4>
 
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code><a href="MongoResultInfo.html">MongoResultInfo</a></code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>返回聚合后得到的单条数据，并输出响应的结果对象</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="toArray"><span class="type-signature">(async) </span>toArray<span class="signature">()</span><span class="type-signature"> &rarr; {Array}</span></h4>
+
+    
 
 
 
 <div class="description">
-    <p>状态信息类型枚举</p>
+    <p>返回聚合后得到的数据集</p>
 </div>
 
-
-
-
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>success</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>成功类信息</p></td>
-        </tr>
-
-        
-
-    
-
-        <tr>
-            
-                <td class="name"><code>error</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>错误类信息</p></td>
-        </tr>
-
-        
-
-    
-
-        <tr>
-            
-                <td class="name"><code>warning</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>警告类信息</p></td>
-        </tr>
-
-        
-
-    
-
-        <tr>
-            
-                <td class="name"><code>debug</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>调试类信息</p></td>
-        </tr>
-
-        
-
-    
-
-        <tr>
-            
-                <td class="name"><code>info</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>消息类信息</p></td>
-        </tr>
-
-        
-
-    
-
-        <tr>
-            
-                <td class="name"><code>other</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>其他类信息</p></td>
-        </tr>
-
-        
-
-    
-    </tbody>
-</table>
 
 
 
@@ -611,11 +472,49 @@
 
 
 
-</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
 
         
-    
 
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>Array</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>聚合后得到的数据集</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
     
 
     
