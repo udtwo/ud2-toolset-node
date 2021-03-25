@@ -1,15 +1,18 @@
 declare module 'ud2-toolset-node' {
+
+	class Decimal { }
 	class mongodb {
 		ObjectId: object;
 		ClientSession: object;
 		MongoClient: object;
+		AggregationCursor: object;
 	}
 	class express {
 		Router: object;
 		Response: object;
 		Request: object;
 	}
-	class Decimal {}
+
 
 	/**
 	 * 控制器基础类
@@ -259,6 +262,138 @@ declare module 'ud2-toolset-node' {
 		createPart(data: object, checkValueMode: string): object;
 
 	}
+	/**
+	 * 聚合管道类
+	 */
+	class AggregatePipeline {
+
+		/**
+		 * 创建一个聚合管道对象
+		 * @constructor
+		 */
+		constructor();
+		/**
+		 * 管道操作对象集合
+		 * @member
+		 */
+		pipeline: Array<object>;
+		/**
+		 * 向聚合管道添加一个集合关联对象
+		 * @param {ModelCreater | string} fromModel 关联模型
+		 * @param {string} localField 主集合查询字段
+		 * @param {string} foreignField 外连集合待查字段
+		 * @param {string} lookName 关联名称
+		 * @return {this} 返回当前对象
+		 */
+		lookup(fromModel: ModelCreater | string, localField: string, foreignField: string, lookName: string): this;
+		/**
+		 * 向聚合管道添加一个展开对象
+		 * @param {string} name 展开字段名称
+		 * @param {boolean} [preserveNullAndEmptyArrays=false] 是否保留空/空白数组
+		 * @return {this} 返回当前对象
+		 */
+		unwind(name: string, preserveNullAndEmptyArrays?: boolean): this;
+		/**
+		 * 向聚合管道添加一个投影对象
+		 * @param {object} rule 投影规则
+		 * @return {this} 返回当前对象
+		 */
+		project(rule: object): this;
+		/**
+		 * 向管道添加一个排序规则
+		 * @param {object | string} rule 排序规则字段名称
+		 * @param {number | boolean} [ruleMethod] 排序方式
+		 * @return {this} 返回当前对象
+		 * @example
+		 * sort(rule: object)
+		 * % 通过排序规则进行管道设置
+		 * sort(rule: string, ruleMethod: boolean)
+		 * % 通过排序字段及排序方式进行管道设置
+		 */
+		sort(rule: object | string, ruleMethod: number | boolean): this;
+		/**
+		 * 设置管道游标跳过数据的条目数量
+		 * @param {number} value 跳过数据的条目数量
+		 * @return {this} 返回当前对象
+		 */
+		skip(value: number): this;
+		/**
+		 * 设置管道游标输出数据的条目数量
+		 * @param {number} value 输出数据的条目数量
+		 * @return {this} 返回当前对象
+		 */
+		limit(value: number): this;
+		/**
+		 * 向管道添加一个分组规则
+		 * @param {object} rule 分组规则
+		 * @return {this} 返回当前对象
+		 */
+		group(rule: object): this;
+		/**
+		 * 向管道添加一个匹配规则
+		 * @param {object} rule 匹配规则
+		 * @return {this} 返回当前对象
+		 */
+		match(rule: object): this;
+		/**
+		 * 当管道执行到当前阶段时，统计当前阶段中的文档数量
+		 * @param {string} countName 计数字段名称
+		 * @return {this} 返回当前对象
+		 */
+		count(countName: string): this;
+
+		/**
+		 * 向管道添加若干字段
+		 * @param {object} fields 字段及字段参数
+		 * @return {this} 返回当前对象
+		 */
+		addFields(fields: object): this;
+		/**
+		 * 向管道添加若干字段
+		 * @param {object} fields 字段及字段参数
+		 * @return {this} 返回当前对象
+		 */
+		set(fields: object): this;
+		/**
+		 * 从管道移除若干字段
+		 * @param {Array<string>} fields 字段
+		 * @return {this} 返回当前对象
+		 */
+		unset(fields: Array<string>): this;
+
+	}
+	/**
+	 * 聚合对象
+	 * 通过执行聚合管道流程后生成的聚合对象
+	 * @class
+	 */
+	class AggregateResultInfo {
+
+		/**
+		 * 创建一个聚合对象
+		 * @constructor
+		 * @param {mongodb.AggregationCursor} cursor 聚合游标
+		 */
+		constructor(cursor: mongodb['AggregationCursor']);
+		/**
+		 * 返回聚合后得到的数据集
+		 * @returns {Array<object>} 聚合后得到的数据集
+		 */
+		toArray(): Promise<Array<object>>;
+		/**
+		 * 返回聚合后得到的数据集
+		 * 并输出为 MongoResultInfo
+		 * @returns {MongoResultInfo} 返回聚合后得到的数据集，并输出响应的结果对象
+		 */
+		find(): Promise<MongoResultInfo>;
+		/**
+		 * 返回聚合后得到的单条数据
+		 * 并输出为 MongoResultInfo
+		 * @returns {MongoResultInfo} 返回聚合后得到的单条数据，并输出响应的结果对象
+		 */
+		findOne(): Promise<MongoResultInfo>;
+		
+	}
 
 	/**
 	 * MongoDB 创建数据库操作相关参数类
@@ -329,7 +464,7 @@ declare module 'ud2-toolset-node' {
 		 * @param {object} [options={}] 信息参数
 		 * @param {mongodb.ClientSession | null} [options.session=null] MongoClient 运行中的 session 对象
 		 * @param {object | null} [options.where=null] 查询方法中的条件筛选
-		 * @param {object | null} [options.project=null] 查询方法中的显示字段筛选
+		 * @param {object | null} [options.projection=null] 查询方法中的显示字段筛选
 		 * @param {object | null} [options.sort=null] 查询方法中的排序
 		 * @param {number | null} [options.skip=null] 查询方法中跳过的数据行数
 		 * @param {number | null} [options.limit=null] 查询方法中提取的数据行数
@@ -339,7 +474,7 @@ declare module 'ud2-toolset-node' {
 		find(model: object, options: {
 			session?: mongodb['ClientSession'],
 			where?: object | null,
-			project?: object | null,
+			projection?: object | null,
 			sort?: object | null,
 			skip?: object | null,
 			limit?: object | null,
@@ -352,14 +487,14 @@ declare module 'ud2-toolset-node' {
 		 * @param {object} [options={}] 信息参数
 		 * @param {mongodb.ClientSession | null} [options.session=null] MongoClient 运行中的 session 对象
 		 * @param {object | null} [options.where=null] 查询方法中的条件筛选
-		 * @param {object | null} [options.project=null] 查询方法中的显示字段筛选
+		 * @param {object | null} [options.projection=null] 查询方法中的显示字段筛选
 		 * @param {object | null} [options.sort=null] 查询方法中的排序
 		 * @returns {MongoResultInfo} 事务执行完毕所返回的相关结果对象
 		 */
 		findOne(model: object, options: {
 			session?: mongodb['ClientSession'],
 			where?: object | null,
-			project?: object | null,
+			projection?: object | null,
 			sort?: object | null
 		}): Promise<MongoResultInfo>;
 		/**
@@ -1016,7 +1151,7 @@ declare module 'ud2-toolset-node' {
 			des?: number,
 			min?: number,
 			max?: number,
-			field?: string | null, 
+			field?: string | null,
 			errorText: string
 		}): boolean;
 
@@ -1038,7 +1173,7 @@ declare module 'ud2-toolset-node' {
 		checkNumber(value: any, options?: {
 			min?: number,
 			max?: number,
-			field?: string | null, 
+			field?: string | null,
 			errorText?: string
 		}): boolean;
 
