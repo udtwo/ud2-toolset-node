@@ -219,7 +219,7 @@ declare module 'ud2-toolset-node' {
 		 * @param {object} [option={}] 检测参数
 		 * @param {string} [option.checkModelMode=CheckModelModeEnum.modelFull] 检测模型参数的方式
 		 * @param {string} [option.checkValueMode=null] 检测模型参数值的方式
-		 * @return {object} 检测后的参数值数据，如果检测失败，并且检测参数中有返回报告设置，则返回错误对象
+		 * @returns {object} 检测后的参数值数据，如果检测失败，并且检测参数中有返回报告设置，则返回错误对象
 		 */
 		getModelCols(data: object, option: {
 			checkModelMode: string,
@@ -232,7 +232,7 @@ declare module 'ud2-toolset-node' {
 		 * @param {object} [option={}] 检测参数
 		 * @param {string} [option.checkModelMode=CheckModelModeEnum.modelFull] 检测模型参数的方式
 		 * @param {string} [option.checkValueMode=null] 检测模型参数值的方式
-		 * @return {object} 检测后的参数值数据，如果检测失败，并且检测参数中有返回报告设置，则返回错误对象
+		 * @returns {object} 检测后的参数值数据，如果检测失败，并且检测参数中有返回报告设置，则返回错误对象
 		 */
 		valueCheck(data: object, option: {
 			checkModelMode: string,
@@ -245,7 +245,7 @@ declare module 'ud2-toolset-node' {
 		 * @param {object} [option={}] 检测参数
 		 * @param {string} [option.checkModelMode=CheckModelModeEnum.modelFull] 检测模型参数的方式
 		 * @param {string} [option.checkValueMode=null] 检测模型参数值的方式
-		 * @return {object} 模型数据对象，如果检测失败，并且检测参数中有返回报告设置，则返回错误对象
+		 * @returns {object} 模型数据对象，如果检测失败，并且检测参数中有返回报告设置，则返回错误对象
 		 */
 		create(data: object, option: {
 			checkModelMode: string,
@@ -257,7 +257,7 @@ declare module 'ud2-toolset-node' {
 		 * 该模型模型参数检测方式为 modelPart，即通过传入模型参数返回只含有部分属性的模型，而非补全模型属性
 		 * @param {object} data 待检测的参数值数据
 		 * @param {string} [checkValueMode=CheckValueModeEnum.failToDefault] 检测模型参数值的方式
-		 * @return {object} 模型数据对象，如果检测失败，并且检测参数中有返回报告设置，则返回错误对象
+		 * @returns {object} 模型数据对象，如果检测失败，并且检测参数中有返回报告设置，则返回错误对象
 		 */
 		createPart(data: object, checkValueMode: string): object;
 
@@ -283,27 +283,27 @@ declare module 'ud2-toolset-node' {
 		 * @param {string} localField 主集合查询字段
 		 * @param {string} foreignField 外连集合待查字段
 		 * @param {string} lookName 关联名称
-		 * @return {this} 返回当前对象
+		 * @returns {this} 返回当前对象
 		 */
 		lookup(fromModel: ModelCreater | string, localField: string, foreignField: string, lookName: string): this;
 		/**
 		 * 向聚合管道添加一个展开对象
 		 * @param {string} name 展开字段名称
 		 * @param {boolean} [preserveNullAndEmptyArrays=false] 是否保留空/空白数组
-		 * @return {this} 返回当前对象
+		 * @returns {this} 返回当前对象
 		 */
 		unwind(name: string, preserveNullAndEmptyArrays?: boolean): this;
 		/**
 		 * 向聚合管道添加一个投影对象
 		 * @param {object} rule 投影规则
-		 * @return {this} 返回当前对象
+		 * @returns {this} 返回当前对象
 		 */
 		project(rule: object): this;
 		/**
 		 * 向管道添加一个排序规则
 		 * @param {object | string} rule 排序规则字段名称
 		 * @param {number | boolean} [ruleMethod] 排序方式
-		 * @return {this} 返回当前对象
+		 * @returns {this} 返回当前对象
 		 * @example
 		 * sort(rule: object)
 		 * % 通过排序规则进行管道设置
@@ -314,50 +314,50 @@ declare module 'ud2-toolset-node' {
 		/**
 		 * 设置管道游标跳过数据的条目数量
 		 * @param {number} value 跳过数据的条目数量
-		 * @return {this} 返回当前对象
+		 * @returns {this} 返回当前对象
 		 */
 		skip(value: number): this;
 		/**
 		 * 设置管道游标输出数据的条目数量
 		 * @param {number} value 输出数据的条目数量
-		 * @return {this} 返回当前对象
+		 * @returns {this} 返回当前对象
 		 */
 		limit(value: number): this;
 		/**
 		 * 向管道添加一个分组规则
 		 * @param {object} rule 分组规则
-		 * @return {this} 返回当前对象
+		 * @returns {this} 返回当前对象
 		 */
 		group(rule: object): this;
 		/**
 		 * 向管道添加一个匹配规则
 		 * @param {object} rule 匹配规则
-		 * @return {this} 返回当前对象
+		 * @returns {this} 返回当前对象
 		 */
 		match(rule: object): this;
 		/**
 		 * 当管道执行到当前阶段时，统计当前阶段中的文档数量
 		 * @param {string} countName 计数字段名称
-		 * @return {this} 返回当前对象
+		 * @returns {this} 返回当前对象
 		 */
 		count(countName: string): this;
 
 		/**
 		 * 向管道添加若干字段
 		 * @param {object} fields 字段及字段参数
-		 * @return {this} 返回当前对象
+		 * @returns {this} 返回当前对象
 		 */
 		addFields(fields: object): this;
 		/**
 		 * 向管道添加若干字段
 		 * @param {object} fields 字段及字段参数
-		 * @return {this} 返回当前对象
+		 * @returns {this} 返回当前对象
 		 */
 		set(fields: object): this;
 		/**
 		 * 从管道移除若干字段
 		 * @param {Array<string>} fields 字段
-		 * @return {this} 返回当前对象
+		 * @returns {this} 返回当前对象
 		 */
 		unset(fields: Array<string>): this;
 
@@ -731,17 +731,18 @@ declare module 'ud2-toolset-node' {
 		 * @param {string} sender 该结果的发起方
 		 * @param {StateInfo} stateInfo 状态信息对象
 		 * @param {object} [options={}] 信息参数
-		 * @param {object | Array} options.result 结果对象或集合
-		 * @param {number | null} options.count 统计数据
-		 * @param {object | null} options.render 传递原参数
-		 * @param {ObjectId | null} options.insertedId 执行新增后的新增行对应的 ObjectId
-		 * @param {Array | null} options.insertedIds 执行新增后的新增行对应的 ObjectId 集合
-		 * @param {number | null} options.insertedCount 执行新增后的新增行数
-		 * @param {number | null} options.modifiedCount 执行更新后的更新行数
-		 * @param {number | null} options.matchedCount 执行更新时的 where 条件匹配的行数
-		 * @param {number | null} options.upsertedId 执行更新并新增后的新增行对应的 ObjectId
-		 * @param {number | null} options.upsertedCount 执行更新并新增后的新增行数
-		 * @param {number | null} options.deletedCount 执行删除后的删除行数
+		 * @param {object | Array} [options.result=null] 结果对象或集合
+		 * @param {number | null} [options.count=null] 统计数据
+		 * @param {object | null} [options.render=null] 传递原参数
+		 * @param {ObjectId | null} [options.insertedId=null] 执行新增后的新增行对应的 ObjectId
+		 * @param {Array | null} [options.insertedIds=null] 执行新增后的新增行对应的 ObjectId 集合
+		 * @param {number | null} [options.insertedCount=null] 执行新增后的新增行数
+		 * @param {number | null} [options.modifiedCount=null] 执行更新后的更新行数
+		 * @param {number | null} [options.matchedCount=null] 执行更新时的 where 条件匹配的行数
+		 * @param {ObjectId | null} [options.upsertedId=null] 执行更新并新增后的新增行对应的 ObjectId
+		 * @param {number | null} [options.upsertedCount=null] 执行更新并新增后的新增行数
+		 * @param {number | null} [options.deletedCount=null] 执行删除后的删除行数
+		 * @param {string} [options.errorRemark=null] 错误描述
 		 */
 		constructor(sender: string, stateInfo: StateInfo, options: {
 			result: object | Array<object>,
@@ -814,6 +815,7 @@ declare module 'ud2-toolset-node' {
 		 * @param {object} [options={}] 信息参数
 		 * @param {object | null} [options.render=null] 执行业务时返回的相关参数信息
 		 * @param {string | null} [options.sender='MongoResult.error'] 错误信息的调用对象说明
+		 * @param {string | null} [options.errorRemark=null] 错误描述
 		 * @returns {MongoResultInfo} 返回状态信息描述
 		 */
 		static error(stateInfo: StateInfo, options: {
