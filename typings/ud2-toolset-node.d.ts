@@ -1121,6 +1121,12 @@ declare module 'ud2-toolset-node' {
 		noError(): boolean;
 
 		/**
+		 * 打印错误对应的结果对象
+		 * @param {express.Response} res Response 对象
+		 */
+		print(): void;
+
+		/**
 		 * 判断传入值是否符合 ObjectId 规则
 		 * @param {any} value 待检测的值
 		 * @param {object} [options={}] 判断参数
