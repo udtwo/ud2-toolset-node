@@ -3,6 +3,8 @@ declare module 'ud2-toolset-node' {
 	class Decimal { }
 	class mongodb {
 		ObjectId: object;
+		Decimal128: object;
+		Long: object;
 		ClientSession: object;
 		MongoClient: object;
 		AggregationCursor: object;
@@ -114,14 +116,6 @@ declare module 'ud2-toolset-node' {
 		 * @returns {object} pageInfo 对象
 		 */
 		static pageData(req: express['Request']): object;
-
-	}
-
-	/**
-	 * 交互处理类
-	 * 用户处理请求、响应、会话等相关交互项目
-	 */
-	class InteractHandler {
 
 	}
 
@@ -392,7 +386,7 @@ declare module 'ud2-toolset-node' {
 		 * @returns {MongoResultInfo} 返回聚合后得到的单条数据，并输出响应的结果对象
 		 */
 		findOne(): Promise<MongoResultInfo>;
-		
+
 	}
 
 	/**
@@ -1317,29 +1311,42 @@ declare module 'ud2-toolset-node' {
 	 */
 	class Converter {
 		/**
-		 * 将参数强制转换为 ObjectId
+		 * 将值强制转换为 ObjectId
 		 * @static
-		 * @param {object} value 待转换的值
-		 * @param {object} [defaultValue=null] 若无法转换，则返回此值
-		 * @returns {ObjectId} 返回转换后的值，若无法转换，则返回 defaultValue
+		 * @param {any} value 待转换的值
+		 * @param {mongodb['ObjectId'] | null} [defaultValue=null] 若无法转换，则返回此值
+		 * @returns {mongodb['ObjectId'] | null} 返回转换后的值，若无法转换，则返回 defaultValue
 		 */
-		static toObjectId(value: object, defaultValue?: object): mongodb['ObjectId'];
-
+		static toObjectId(value: any, defaultValue?: object): mongodb['ObjectId'] | null;
 		/**
-		 * 将参数强制转换为 Number
-		 * @param {object} value 待转换的值
-		 * @param {object} [defaultValue=null] 若无法转换，则返回此值
-		 * @returns {Number} 返回转换后的值，若无法转换，则返回 defaultValue
+		 * 将值强制转换为 DB Decimal128
+		 * @param {any} value 待转换的值
+		 * @param {mongodb.Decimal128 | null} [defaultValue=null] 若无法转换，则返回此值
+		 * @returns {mongodb.Decimal128 | null} 返回转换后的值，若无法转换，则返回 defaultValue
 		 */
-		static toNumber(value: object, defaultValue?: object): Number;
+		static toDBDecimal128(value: any, defaultValue?: mongodb['Decimal128'] | null): mongodb['Decimal128'] | null;
+		/**
+		 * 将值强制转换为 DB Long
+		 * @param {any} value 待转换的值
+		 * @param {mongodb.Long | null} [defaultValue=null] 若无法转换，则返回此值
+		 * @returns {mongodb.Long | null} 返回转换后的值，若无法转换，则返回 defaultValue
+		 */
+		static toDBLong(value: any, defaultValue?: mongodb['Long'] | null): mongodb['Long'] | null;
 
 		/**
 		 * 将参数强制转换为 Decimal
-		 * @param {object} value 待转换的值
-		 * @param {object} [defaultValue=null] 若无法转换，则返回此值
-		 * @returns {Decimal} 返回转换后的值，若无法转换，则返回 defaultValue
+		 * @param {any} value 待转换的值
+		 * @param {Decimal | null} [defaultValue=null] 若无法转换，则返回此值
+		 * @returns {Decimal | null} 返回转换后的值，若无法转换，则返回 defaultValue
 		 */
-		static toDecimal(value: object, defaultValue?: object): Decimal;
+		static toDecimal(value: any, defaultValue: Decimal | null): Decimal | null;
+		/**
+		 * 将参数强制转换为 Number
+		 * @param {any} value 待转换的值
+		 * @param {Number | null} [defaultValue=null] 若无法转换，则返回此值
+		 * @returns {Number | null} 返回转换后的值，若无法转换，则返回 defaultValue
+		 */
+		static toNumber(value: any, defaultValue: Number | null): Number | null;
 
 		/**
 		 * 将参数转换为助记码
@@ -1347,7 +1354,6 @@ declare module 'ud2-toolset-node' {
 		 * @returns {string} 返回转换后的助记码
 		 */
 		static toHelpCode(value: string): string;
-
 	}
 
 	/**
