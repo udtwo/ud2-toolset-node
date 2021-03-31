@@ -1125,6 +1125,10 @@ declare module 'ud2-toolset-node' {
 		 * @param {express.Response} res Response 对象
 		 */
 		print(): void;
+		/**
+		 * 清空错误列表
+		 */
+		empty(): void;
 
 		/**
 		 * 判断传入值是否符合 ObjectId 规则
@@ -1211,6 +1215,24 @@ declare module 'ud2-toolset-node' {
 		 * @returns {boolean} 返回是否符合检测结果
 		 */
 		checkDate(value: any, field?: string | null, options?: {
+			errorText: string
+		}): boolean;
+
+		/**
+		 * 数组检测
+		 * @param {any} value 待检测的值
+		 * @param {object} [options={}] 判断参数
+		 * @param {string | null} [field=null] 字段信息
+		 * @param {CheckArrayInTypeEnum | null} [type=null] 检测类型
+		 * @param {RegExp | null} [options.regex=Utils.RegexRule.all] 参数取值范围
+		 * @param {Array<any> | null} [options.valueRange=[]] 参数取值范围
+		 * @param {string} [options.errorText='数组格式错误'] 错误文本
+		 * @returns {boolean} 返回是否符合检测结果
+		 */
+		checkArray(value: any, field?: string | null, options?: {
+			type: String | null,
+			regex: RegExp | null,
+			valueRange: Array<any> | null,
 			errorText: string
 		}): boolean;
 
