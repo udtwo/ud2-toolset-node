@@ -1,3 +1,5 @@
+import ResponseMultiList from "../express/ResponseMultiList";
+
 declare module 'ud2-toolset-node' {
 
 	class Decimal { }
@@ -87,6 +89,58 @@ declare module 'ud2-toolset-node' {
 		 */
 		static pageList(res: express['Response'], pageInfo: object, info: MongoResultInfo): void;
 
+		/**
+		 * 基于 ResponseMultiList 的集合响应输出对象
+		 * @param {express.Response} res Response 对象
+		 * @param {ResponseMultiList} responseMultiList MongoResultInfo 集合处理对象
+		 */
+		static mulitList(res: express['Response'], responseMultiList: ResponseMultiList): void;
+
+	}
+	/**
+	 * 多集合输出处理类
+	 * @class
+	 */
+	class ResponseMultiList {
+
+		/**
+		 * 构造一个多集合处理对象
+		 * @constructor
+		 */
+		constructor();
+
+		/**
+		 * 向处理对象添加集合
+		 * @param {string} name 集合名称
+		 * @param {MongoResultInfo} info 数据库状态对象
+		 * @param {object} [page=null] 页码对象
+		 */
+		add(name: string, info: MongoResultInfo, page?: { now: number, size: number }): void;
+
+		/**
+		 * 检测容器中是否包含错误对象
+		 * @returns {boolean} 返回容器中是否包含错误对象
+		 */
+		hasError(): boolean;
+
+		/**
+		 * 检测容器中是否无错误对象
+		 * @returns {boolean} 返回容器中是否无错误对象
+		 */
+		noError(): boolean;
+
+		/**
+		 * 输出容器错误对象
+		 * @returns {MongoResultInfo} 返回容器错误对象
+		 */
+		error(): MongoResultInfo;
+
+		/**
+		 * 输出多集合组合结果对象
+		 * @returns {object} 输出组合结果对象
+		 */
+		result(): object;
+
 	}
 
 	/**
@@ -113,9 +167,10 @@ declare module 'ud2-toolset-node' {
 		/**
 		 * 页数据处理
 		 * @param {express.Request} req Request 请求对象
+		 * @param {string} [queryName='page'] 前台参数名称
 		 * @returns {object} pageInfo 对象
 		 */
-		static pageData(req: express['Request']): object;
+		static pageData(req: express['Request'], queryName?: string): object;
 
 	}
 

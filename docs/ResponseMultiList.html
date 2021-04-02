@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>PageHandler - Documentation</title>
+    <title>ResponseMultiList - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">PageHandler</h1>
+    <h1 class="page-title">ResponseMultiList</h1>
     
 
     
@@ -42,10 +42,10 @@
 <header>
     
         <h2>
-        PageHandler
+        ResponseMultiList
         </h2>
         
-            <div class="class-description"><p>页处理类</p></div>
+            <div class="class-description"><p>多集合输出处理类</p></div>
         
     
 </header>
@@ -60,11 +60,15 @@
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="PageHandler"><span class="type-signature"></span>new PageHandler<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="ResponseMultiList"><span class="type-signature"></span>new ResponseMultiList<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
+
+<div class="description">
+    <p>构造一个多集合处理对象</p>
+</div>
 
 
 
@@ -152,14 +156,14 @@
 
     
 
-    <h4 class="name" id=".getDataAttrCount"><span class="type-signature">(static) </span>getDataAttrCount<span class="signature">(data)</span><span class="type-signature"> &rarr; {number}</span></h4>
+    <h4 class="name" id="add"><span class="type-signature"></span>add<span class="signature">(name, info, page)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    <p>获取 request.body 中是否含有属性</p>
+    <p>向处理对象添加集合</p>
 </div>
 
 
@@ -234,204 +238,7 @@
 
         <tr>
             
-                <td class="name"><code>data</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>object</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>request.body 对象</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>number</code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>属性数目</p>
-</div>
-
-    
-</div>
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id=".pageData"><span class="type-signature">(static) </span>pageData<span class="signature">(req, queryName<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {object}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>页数据处理</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-        <th>Default</th>
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>req</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>express.Request</code></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last">
-                <p>Request 请求对象</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>queryName</code></td>
+                <td class="name"><code>name</code></td>
             
 
             <td class="type">
@@ -444,160 +251,41 @@
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
 
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    'page'
-                
-                </td>
             
 
             <td class="description last">
-                <p>前台参数名称</p>
+                <p>集合名称</p>
                 
             </td>
         </tr>
 
     
-    </tbody>
-</table>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>object</code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>pageInfo 对象</p>
-</div>
-
-    
-</div>
-
-
-
-</div>
-        
+        <tr>
             
-<div class="section-method">
+                <td class="name"><code>info</code></td>
+            
 
-    
-
-    <h4 class="name" id=".pageInfo"><span class="type-signature">(static) </span>pageInfo<span class="signature">(page, allCount)</span><span class="type-signature"> &rarr; {object}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>页码信息</p>
-</div>
+            <td class="type">
+            
+                
+<span class="param-type"><code><a href="MongoResultInfo.html">MongoResultInfo</a></code></span>
 
 
+            
+            </td>
 
+            
 
+            
 
-<dl class="details">
+            <td class="description last">
+                <p>数据库状态对象</p>
+                
+            </td>
+        </tr>
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
     
 
         <tr>
@@ -625,34 +313,395 @@
         </tr>
 
     
-
-        <tr>
-            
-                <td class="name"><code>allCount</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>number</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>数据数据</p>
-                
-            </td>
-        </tr>
-
-    
     </tbody>
 </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="error"><span class="type-signature"></span>error<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="MongoResultInfo.html">MongoResultInfo</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>输出容器错误对象</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code><a href="MongoResultInfo.html">MongoResultInfo</a></code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>返回容器错误对象</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="hasError"><span class="type-signature"></span>hasError<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>检测容器中是否包含错误对象</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>boolean</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>返回容器中是否包含错误对象</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="noError"><span class="type-signature"></span>noError<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>检测容器中是否无错误对象</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>boolean</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>返回容器中是否无错误对象</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="result"><span class="type-signature"></span>result<span class="signature">()</span><span class="type-signature"> &rarr; {object}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>输出多集合组合结果对象</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
 
 
 
@@ -686,7 +735,7 @@
 
 
 <div class="param-desc">
-    <p>pageInfo 对象</p>
+    <p>输出组合结果对象</p>
 </div>
 
     
