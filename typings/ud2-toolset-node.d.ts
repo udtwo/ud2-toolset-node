@@ -17,6 +17,19 @@ declare module 'ud2-toolset-node' {
 		Request: object;
 	}
 
+	/**
+	 * 页码对象
+	 * @class
+	 */
+	class PageInfo {
+		/**
+		 * 创建一个页码对象
+		 * @param {number} now 当前页
+		 * @param {number} size 页尺寸
+		 * @param {number} count 条目总数量
+		 */
+		constructor(now: number, size: number, count: number);
+	}
 
 	/**
 	 * 控制器基础类
@@ -24,7 +37,7 @@ declare module 'ud2-toolset-node' {
 	 */
 	class Controller {
 		/**
-		 * 构造方法
+		 * 创建一个控制器
 		 * @constructor
 		 * @param {string} controllerName 控制器名称
 		 * @param {object} [options={}] 操作选项 
@@ -77,17 +90,17 @@ declare module 'ud2-toolset-node' {
 		/**
 		 * 基于 MongoResultInfo 的列表响应输出对象
 		 * @param {express.Response} res Response 对象
-		 * @param {MongoResultInfo} info MongoResultInfo 状态对象
+		 * @param {MongoResultInfo} mongoResultInfo MongoResultInfo 状态对象
 		 */
-		static list(res: express['Response'], info: MongoResultInfo): void;
+		static list(res: express['Response'], mongoResultInfo: MongoResultInfo): void;
 
 		/**
 		 * 基于 MongoResultInfo 的页码列表响应输出对象
 		 * @param {express.Response} res Response 对象
 		 * @param {object} pageInfo 页码对象
-		 * @param {MongoResultInfo} info MongoResultInfo 状态对象
+		 * @param {MongoResultInfo} mongoResultInfo MongoResultInfo 状态对象
 		 */
-		static pageList(res: express['Response'], pageInfo: object, info: MongoResultInfo): void;
+		static pageList(res: express['Response'], pageInfo: object, mongoResultInfo: MongoResultInfo): void;
 
 		/**
 		 * 基于 ResponseMultiList 的集合响应输出对象
@@ -112,10 +125,10 @@ declare module 'ud2-toolset-node' {
 		/**
 		 * 向处理对象添加集合
 		 * @param {string} name 集合名称
-		 * @param {MongoResultInfo} info 数据库状态对象
+		 * @param {MongoResultInfo} mongoResultInfo 数据库状态对象
 		 * @param {object} [page=null] 页码对象
 		 */
-		add(name: string, info: MongoResultInfo, page?: { now: number, size: number }): void;
+		add(name: string, mongoResultInfo: MongoResultInfo, page?: { now: number, size: number }): void;
 
 		/**
 		 * 检测容器中是否包含错误对象
@@ -158,8 +171,8 @@ declare module 'ud2-toolset-node' {
 
 		/**
 		 * 页码信息
-		 * @param {object} page 页码对象
-		 * @param {number} allCount 数据数据
+		 * @param {PageInfo} pageInfo 页码对象
+		 * @param {number} count 数据数据
 		 * @returns {object} pageInfo 对象
 		 */
 		static pageInfo(page: object, allCount: number): object;
@@ -190,7 +203,7 @@ declare module 'ud2-toolset-node' {
 		 * @param {string} [renderOptions.appUsePath=null] 首要访问路径
 		 * @param {object} [renderOptions.options={}] 呈现页面过程中向页面传递的参数对象
 		 * @param {string} [renderOptions.preViewPath=''] 页面路径中的前置路径
-		 * @param {function(express.Request, express.Response):boolean} [renderOptions.preCallback=NoopByTrue] 页面处理的前置回调 如果为false 则不执行页面呈现
+		 * @param {function(express.Request, express.Response):boolean} [renderOptions.preCallback=Utils.noopTrue] 页面处理的前置回调 如果为false 则不执行页面呈现
 		 * @returns {express.Router} 路由对象
 		 */
 		static routerBaseCreate(pathSet: Array<{
@@ -213,7 +226,7 @@ declare module 'ud2-toolset-node' {
 		 * @param {string} [renderOptions.appUsePath=null] 首要访问路径
 		 * @param {object} [renderOptions.options={}] 呈现页面过程中向页面传递的参数对象
 		 * @param {string} [renderOptions.preViewPath=''] 页面路径中的前置路径
-		 * @param {function(express.Request, express.Response):boolean} [renderOptions.preCallback=NoopByTrue] 页面处理的前置回调 如果为false 则不执行页面呈现
+		 * @param {function(express.Request, express.Response):boolean} [renderOptions.preCallback=Utils.noopTrue] 页面处理的前置回调 如果为false 则不执行页面呈现
 		 * @returns {express.Router} 路由对象
 		 */
 		static routerParamsCreate(preVisitPath: string, pathParams: object, renderOptions: {
@@ -499,6 +512,21 @@ declare module 'ud2-toolset-node' {
 		 * @returns {mongodb.MongoClient} 返回 MongoClient 对象，如果获取失败，则返回 null
 		 */
 		connect(): mongodb['MongoClient'];
+
+		/**
+		 * MongoDB 管道执行方法
+		 * @async
+		 * @param {MongoModel} model 数据模型
+		 * @param {Array} [pipeline=[]] 聚合管道
+		 * @param {object} [options={}] 聚合参数
+		 * @param {mongodb.ClientSession | null} [options.session=null] MongoClient 运行中的 session 对象
+		 * @param {number} [options.batchSize=1000] 聚合返回的文档数
+		 * @returns {AggregateResultInfo} 聚合对象
+		 */
+		aggregate(model: object, pipeline: Array<object>, options?: {
+			session?: mongodb['ClientSession'],
+			batchSize?: number
+		}): AggregateResultInfo;
 		/**
 		 * MongoDB 数据库事务执行方法
 		 * @async
@@ -517,6 +545,7 @@ declare module 'ud2-toolset-node' {
 		 * @param {object | null} [options.sort=null] 查询方法中的排序
 		 * @param {number | null} [options.skip=null] 查询方法中跳过的数据行数
 		 * @param {number | null} [options.limit=null] 查询方法中提取的数据行数
+		 * @param {PageInfo | object | null} [options.page=null] 查询方法中需要的页码
 		 * @param {boolean} [options.isCount=false] 是否统计查询行数
 		 * @returns {MongoResultInfo} 事务执行完毕所返回的相关结果对象
 		 */
@@ -1506,7 +1535,7 @@ declare module 'ud2-toolset-node' {
 		/**
 		 * 判断传入参数值的类型是否为 Object
 		 * @static
-		 * @param {any} value
+		 * @param {any} value 待检测的值
 		 * @returns {boolean} 返回参数类型是否为 Object
 		 */
 		static isObject(value: any): boolean;
@@ -1514,7 +1543,7 @@ declare module 'ud2-toolset-node' {
 		/**
 		 * 判断传入参数值的类型是否为 Function
 		 * @static
-		 * @param {any} value
+		 * @param {any} value 待检测的值
 		 * @returns {boolean} 返回参数类型是否为 Function
 		 */
 		static isFunction(value: any): boolean;
@@ -1522,7 +1551,7 @@ declare module 'ud2-toolset-node' {
 		/**
 		 * 判断传入参数值的类型是否为 String
 		 * @static
-		 * @param {any} value
+		 * @param {any} value 待检测的值
 		 * @returns {boolean} 返回参数类型是否为 String
 		 */
 		static isString(value: any): boolean;
@@ -1530,7 +1559,7 @@ declare module 'ud2-toolset-node' {
 		/**
 		 * 判断传入参数值的类型是否为 boolean
 		 * @static
-		 * @param {any} value
+		 * @param {any} value 待检测的值
 		 * @returns {boolean} 返回参数类型是否为 boolean
 		 */
 		static isboolean(value: any): boolean;
@@ -1538,7 +1567,7 @@ declare module 'ud2-toolset-node' {
 		/**
 		 * 判断传入参数值的类型是否为 Number
 		 * @static
-		 * @param {any} value
+		 * @param {any} value 待检测的值
 		 * @returns {boolean} 返回参数类型是否为 Number
 		 */
 		static isNumber(value: any): boolean;
@@ -1546,7 +1575,7 @@ declare module 'ud2-toolset-node' {
 		/**
 		 * 判断传入参数值的类型是否为 Array
 		 * @static
-		 * @param {any} value
+		 * @param {any} value 待检测的值
 		 * @returns {boolean} 返回参数类型是否为 Array
 		 */
 		static isArray(value: any): boolean;
@@ -1554,7 +1583,7 @@ declare module 'ud2-toolset-node' {
 		/**
 		 * 判断传入参数值的类型是否为 Date
 		 * @static
-		 * @param {any} value
+		 * @param {any} value 待检测的值
 		 * @returns {boolean} 返回参数类型是否为 Date
 		 */
 		static isDate(value: any): boolean;
@@ -1562,7 +1591,7 @@ declare module 'ud2-toolset-node' {
 		/**
 		 * 判断传入参数值的类型是否为 RegExp
 		 * @static
-		 * @param {any} value
+		 * @param {any} value 待检测的值
 		 * @returns {boolean} 返回参数类型是否为 RegExp
 		 */
 		static isRegExp(value: any): boolean;
