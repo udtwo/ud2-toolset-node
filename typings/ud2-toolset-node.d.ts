@@ -163,27 +163,12 @@ declare module 'ud2-toolset-node' {
 	class PageHandler {
 
 		/**
-		 * 获取 request.body 中是否含有属性
-		 * @param {object} data request.body 对象
-		 * @returns {number} 属性数目
-		 */
-		static getDataAttrCount(data: object): number;
-
-		/**
 		 * 页码信息
 		 * @param {PageInfo} pageInfo 页码对象
 		 * @param {number} count 数据数据
 		 * @returns {object} pageInfo 对象
 		 */
 		static pageInfo(page: object, allCount: number): object;
-
-		/**
-		 * 页数据处理
-		 * @param {express.Request} req Request 请求对象
-		 * @param {string} [queryName='page'] 前台参数名称
-		 * @returns {object} pageInfo 对象
-		 */
-		static pageData(req: express['Request'], queryName?: string): object;
 
 	}
 
