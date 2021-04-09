@@ -317,8 +317,9 @@ declare module 'ud2-toolset-node' {
 		/**
 		 * 创建一个聚合管道对象
 		 * @constructor
+		 * @param {ModelCreater | null} [baseModel=null] 初始 Model
 		 */
-		constructor();
+		constructor(baseModel: ModelCreater | null);
 		/**
 		 * 管道操作对象集合
 		 * @member
@@ -390,6 +391,22 @@ declare module 'ud2-toolset-node' {
 		count(countName: string): this;
 
 		/**
+		 * 通过 PageInfo 对象向管道加入分页条件
+		 * 在调用处进行分页操作
+		 * @param {number | PageInfo} [now] 当前页 或 单参数时为分页对象
+		 * @param {number} [max] 最大页
+		 * @returns {this} 返回当前操作对象
+		 */
+		pageHere(now?: number | PageInfo, max?: number): this;
+		/**
+		 * 向管道加入统计条件
+		 * 在调用处进行统计操作
+		 * 统计会在结果集中输出
+		 * @returns {this} 返回当前操作对象
+		 */
+		countHere(): this;
+
+		/**
 		 * 向管道添加若干字段
 		 * @param {object} fields 字段及字段参数
 		 * @returns {this} 返回当前对象
@@ -419,7 +436,9 @@ declare module 'ud2-toolset-node' {
 		/**
 		 * 创建一个聚合对象
 		 * @constructor
-		 * @param {mongodb.AggregationCursor} cursor 聚合游标
+		 * @param {AggregationCursor} cursor 聚合游标
+		 * @param {object} options 聚合对象选项
+		 * @param {number} [returnCount=0] 聚合回传总数
 		 */
 		constructor(cursor: mongodb['AggregationCursor']);
 		/**
