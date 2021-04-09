@@ -1,7 +1,7 @@
 {
 	"name": "ud2-toolset-node",
 	"type": "module",
-	"version": "0.0.6-test.10",
+	"version": "0.0.6-test.11",
 	"description": "ud2 node toolset",
 	"main": "toolset.js",
 	"author": "peak",
