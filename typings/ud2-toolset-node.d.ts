@@ -920,6 +920,7 @@ declare module 'ud2-toolset-node' {
 		 * @param {string} port 服务器端口号
 		 * @param {string} password 服务器密码
 		 * @param {number} [db=0] 待操作的数据库编号
+		 * @param {boolean} [debug=false] 是否开启 DUBUG，输出相关状态
 		 */
 		constructor(options: {
 			connectName: string,
