@@ -443,19 +443,19 @@ declare module 'ud2-toolset-node' {
 		constructor(cursor: mongodb['AggregationCursor']);
 		/**
 		 * 返回聚合后得到的数据集
-		 * @returns {Array<object>} 聚合后得到的数据集
+		 * @returns {Promise<Array<object>>} 聚合后得到的数据集
 		 */
 		toArray(): Promise<Array<object>>;
 		/**
 		 * 返回聚合后得到的数据集
 		 * 并输出为 MongoResultInfo
-		 * @returns {MongoResultInfo} 返回聚合后得到的数据集，并输出响应的结果对象
+		 * @returns {Promise<MongoResultInfo>} 返回聚合后得到的数据集，并输出响应的结果对象
 		 */
 		find(): Promise<MongoResultInfo>;
 		/**
 		 * 返回聚合后得到的单条数据
 		 * 并输出为 MongoResultInfo
-		 * @returns {MongoResultInfo} 返回聚合后得到的单条数据，并输出响应的结果对象
+		 * @returns {Promise<MongoResultInfo>} 返回聚合后得到的单条数据，并输出响应的结果对象
 		 */
 		findOne(): Promise<MongoResultInfo>;
 
@@ -513,9 +513,9 @@ declare module 'ud2-toolset-node' {
 		/**
 		 * 连接 MongoDB 数据库，获取 MongoClient 对象
 		 * @async
-		 * @returns {mongodb.MongoClient} 返回 MongoClient 对象，如果获取失败，则返回 null
+		 * @returns {Promise<mongodb.MongoClient>} 返回 MongoClient 对象，如果获取失败，则返回 null
 		 */
-		connect(): mongodb['MongoClient'];
+		connect(): Promise<mongodb['MongoClient']>;
 
 		/**
 		 * MongoDB 管道执行方法
@@ -525,17 +525,17 @@ declare module 'ud2-toolset-node' {
 		 * @param {object} [options={}] 聚合参数
 		 * @param {mongodb.ClientSession | null} [options.session=null] MongoClient 运行中的 session 对象
 		 * @param {number} [options.batchSize=1000] 聚合返回的文档数
-		 * @returns {AggregateResultInfo} 聚合对象
+		 * @returns {Promise<AggregateResultInfo>} 聚合对象
 		 */
 		aggregate(model: object, pipeline: Array<object>, options?: {
 			session?: mongodb['ClientSession'],
 			batchSize?: number
-		}): AggregateResultInfo;
+		}): Promise<AggregateResultInfo>;
 		/**
 		 * MongoDB 数据库事务执行方法
 		 * @async
 		 * @param {function(mongodb.ClientSession, mongodb.MongoClient):MongoResultInfo} transactionProcess 事务执行回调方法
-		 * @returns {MongoResultInfo} 事务执行完毕所返回的相关结果对象
+		 * @returns {Promise<MongoResultInfo>} 事务执行完毕所返回的相关结果对象
 		 */
 		transaction(transactionProcess: (session: mongodb['ClientSession'], client: mongodb['MongoClient']) => Promise<MongoResultInfo>): Promise<MongoResultInfo>;
 		/**
@@ -551,7 +551,7 @@ declare module 'ud2-toolset-node' {
 		 * @param {number | null} [options.limit=null] 查询方法中提取的数据行数
 		 * @param {PageInfo | object | null} [options.page=null] 查询方法中需要的页码
 		 * @param {boolean} [options.isCount=false] 是否统计查询行数
-		 * @returns {MongoResultInfo} 事务执行完毕所返回的相关结果对象
+		 * @returns {Promise<MongoResultInfo>} 事务执行完毕所返回的相关结果对象
 		 */
 		find(model: object, options: {
 			session?: mongodb['ClientSession'],
@@ -571,7 +571,7 @@ declare module 'ud2-toolset-node' {
 		 * @param {object | null} [options.where=null] 查询方法中的条件筛选
 		 * @param {object | null} [options.projection=null] 查询方法中的显示字段筛选
 		 * @param {object | null} [options.sort=null] 查询方法中的排序
-		 * @returns {MongoResultInfo} 事务执行完毕所返回的相关结果对象
+		 * @returns {Promise<MongoResultInfo>} 事务执行完毕所返回的相关结果对象
 		 */
 		findOne(model: object, options: {
 			session?: mongodb['ClientSession'],
@@ -586,7 +586,7 @@ declare module 'ud2-toolset-node' {
 		 * @param {object} data 单条数据对象
 		 * @param {object} [options={}] 信息参数
 		 * @param {mongodb.ClientSession | null} [options.session=null] MongoClient 运行中的 session 对象
-		 * @returns {MongoResultInfo} 事务执行完毕所返回的相关结果对象
+		 * @returns {Promise<MongoResultInfo>} 事务执行完毕所返回的相关结果对象
 		 */
 		insertOne(model: object, data: object, options: {
 			session?: mongodb['ClientSession']
@@ -598,7 +598,7 @@ declare module 'ud2-toolset-node' {
 		 * @param {Array} datas 多条数据对象集合
 		 * @param {object} [options={}] 信息参数
 		 * @param {mongodb.ClientSession | null} [options.session=null] MongoClient 运行中的 session 对象
-		 * @returns {MongoResultInfo} 事务执行完毕所返回的相关结果对象
+		 * @returns {Promise<MongoResultInfo>} 事务执行完毕所返回的相关结果对象
 		 */
 		insertMany(model: object, datas: Array<object>, options: {
 			session?: mongodb['ClientSession']
@@ -627,7 +627,7 @@ declare module 'ud2-toolset-node' {
 		 * @param {mongodb.ClientSession | null} [options.session=null] MongoClient 运行中的 session 对象
 		 * @param {object | null} [options.where=null] 查询方法中的条件筛选
 		 * @param {boolean} [options.upsert=false] 是否启用自动更新并新增
-		 * @returns {MongoResultInfo} 事务执行完毕所返回的相关结果对象
+		 * @returns {Promise<MongoResultInfo>} 事务执行完毕所返回的相关结果对象
 		 */
 		updateOne(model: object, operators: {
 			$set?: object | null,
@@ -673,7 +673,7 @@ declare module 'ud2-toolset-node' {
 		 * @param {mongodb.ClientSession | null} [options.session=null] MongoClient 运行中的 session 对象
 		 * @param {object | null} [options.where=null] 查询方法中的条件筛选
 		 * @param {boolean} [options.upsert=false] 是否启用自动更新并新增
-		 * @returns {MongoResultInfo} 事务执行完毕所返回的相关结果对象
+		 * @returns {Promise<MongoResultInfo>} 事务执行完毕所返回的相关结果对象
 		 */
 		updateMany(model: object, operators: {
 			$set?: object | null,
@@ -703,7 +703,7 @@ declare module 'ud2-toolset-node' {
 		 * @param {object} [options={}] 信息参数
 		 * @param {mongodb.ClientSession | null} [options.session=null] MongoClient 运行中的 session 对象
 		 * @param {object | null} [options.where=null] 查询方法中的条件筛选
-		 * @returns {MongoResultInfo} 事务执行完毕所返回的相关结果对象
+		 * @returns {Promise<MongoResultInfo>} 事务执行完毕所返回的相关结果对象
 		 */
 		deleteOne(model: object, options: {
 			session?: mongodb['ClientSession'],
@@ -717,7 +717,7 @@ declare module 'ud2-toolset-node' {
 		 * @param {object} [options={}] 信息参数
 		 * @param {mongodb.ClientSession | null} [options.session=null] MongoClient 运行中的 session 对象
 		 * @param {object | null} [options.where=null] 查询方法中的条件筛选
-		 * @returns {MongoResultInfo} 事务执行完毕所返回的相关结果对象
+		 * @returns {Promise<MongoResultInfo>} 事务执行完毕所返回的相关结果对象
 		 */
 		deleteMany(model: object, options: {
 			session?: mongodb['ClientSession'],
@@ -749,7 +749,7 @@ declare module 'ud2-toolset-node' {
 		 * @param {object | null} [options.sort=null] 查询方法中的排序
 		 * @param {boolean} [options.upsert=false] 是否启用自动更新并新增
 		 * @param {boolean} [options.isOriginal=true] 是否返回未编辑前的数据对象
-		 * @returns {MongoResultInfo} 事务执行完毕所返回的相关结果对象
+		 * @returns {Promise<MongoResultInfo>} 事务执行完毕所返回的相关结果对象
 		 */
 		findOneAndUpdate(model: object, operators: {
 			$set?: object | null,
@@ -784,7 +784,7 @@ declare module 'ud2-toolset-node' {
 		 * @param {object | null} [options.projection=null] 查询方法中的显示字段筛选
 		 * @param {object | null} [options.sort=null] 查询方法中的排序
 		 * @param {boolean} [options.isOriginal=true] 是否返回未编辑前的数据对象
-		 * @returns {MongoResultInfo} 事务执行完毕所返回的相关结果对象
+		 * @returns {Promise<MongoResultInfo>} 事务执行完毕所返回的相关结果对象
 		 */
 		findOneAndDelete(model: object, options: {
 			session?: mongodb['ClientSession'],
@@ -793,6 +793,13 @@ declare module 'ud2-toolset-node' {
 			sort?: object | null,
 			isOriginal?: boolean
 		}): Promise<MongoResultInfo>;
+		/**
+		 * MongoDB 模型在数据库中初始化
+		 * @param {MongoModel} model 数据模型
+		 * @returns {Promise<any>} 初始化后的返回值
+		 */
+		dbInit(model: object): Promise<void>;
+
 		/**
 		 * 数据库类型
 		 */
