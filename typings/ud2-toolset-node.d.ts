@@ -1241,6 +1241,7 @@ declare module 'ud2-toolset-node' {
 		 * @param {number} [options.min=null] 最小长度检测
 		 * @param {number} [options.max=null] 最大长度检测
 		 * @param {string | null} [options.field=null] 字段信息
+		 * @param {boolean} [options.allowNull=false] 是否允许为空
 		 * @param {string} [options.errorText='字符串长度错误'] 错误文本
 		 * @returns {boolean} 返回是否符合检测结果
 		 * @example
@@ -1343,7 +1344,8 @@ declare module 'ud2-toolset-node' {
 		 * 参数正则范围检测
 		 * @param {any} value 待检测的值
 		 * @param {object} [options={}] 判断参数
-		 * @param {RegExp} [options.regex=Utils.RegexRule.all] 参数取值范围
+		 * @param {RegExp} [options.regex=Utils.RegexRule.all] 正则表达式
+		 * @param {boolean} [options.allowNull=false] 是否允许为空
 		 * @param {string | null} [options.field=null] 字段信息
 		 * @param {string} [options.errorText='值不符合正则表达式'] 错误文本
 		 * @returns {boolean} 返回是否符合检测结果
