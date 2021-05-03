@@ -1,5 +1,3 @@
-import ResponseMultiList from "../express/ResponseMultiList";
-
 declare module 'ud2-toolset-node' {
 
 	class Decimal { }
@@ -796,9 +794,9 @@ declare module 'ud2-toolset-node' {
 		/**
 		 * MongoDB 模型在数据库中初始化
 		 * @param {MongoModel} model 数据模型
-		 * @returns {Promise<any>} 初始化后的返回值
+		 * @returns {Promise<MongoResultInfo | any>} 初始化后的返回值
 		 */
-		dbInit(model: object): Promise<void>;
+		dbInit(model: object): Promise<MongoResultInfo | any>;
 
 		/**
 		 * 数据库类型
