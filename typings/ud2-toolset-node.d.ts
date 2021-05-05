@@ -584,10 +584,11 @@ declare module 'ud2-toolset-node' {
 		 * @param {object} data 单条数据对象
 		 * @param {object} [options={}] 信息参数
 		 * @param {mongodb.ClientSession | null} [options.session=null] MongoClient 运行中的 session 对象
+		 * @param {boolean} [options.isForceSaveId=false] 强制保存 ID
 		 * @returns {Promise<MongoResultInfo>} 事务执行完毕所返回的相关结果对象
 		 */
 		insertOne(model: object, data: object, options: {
-			session?: mongodb['ClientSession']
+			session?: mongodb['ClientSession'], isForceSaveId: boolean
 		}): Promise<MongoResultInfo>;
 		/**
 		 * MongoDB 数据库多条新增方法
@@ -596,10 +597,11 @@ declare module 'ud2-toolset-node' {
 		 * @param {Array} datas 多条数据对象集合
 		 * @param {object} [options={}] 信息参数
 		 * @param {mongodb.ClientSession | null} [options.session=null] MongoClient 运行中的 session 对象
+		 * @param {boolean} [options.isForceSaveId=false] 强制保存 ID
 		 * @returns {Promise<MongoResultInfo>} 事务执行完毕所返回的相关结果对象
 		 */
 		insertMany(model: object, datas: Array<object>, options: {
-			session?: mongodb['ClientSession']
+			session?: mongodb['ClientSession'], isForceSaveId: boolean
 		}): Promise<MongoResultInfo>;
 		/**
 		 * MongoDB 数据库编辑方法
