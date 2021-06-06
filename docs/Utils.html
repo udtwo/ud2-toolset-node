@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Controller - Documentation</title>
+    <title>Utils - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Controller</h1>
+    <h1 class="page-title">Utils</h1>
     
 
     
@@ -42,10 +42,10 @@
 <header>
     
         <h2>
-        Controller
+        Utils
         </h2>
         
-            <div class="class-description"><p>控制器基础类</p></div>
+            <div class="class-description"><p>工具类</p></div>
         
     
 </header>
@@ -60,15 +60,11 @@
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="Controller"><span class="type-signature"></span>new Controller<span class="signature">(controllerName, options<span class="signature-attributes">opt</span>, deriveChecker<span class="signature-attributes">opt</span>, deriveState<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Utils"><span class="type-signature"></span>new Utils<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
-
-<div class="description">
-    <p>创建一个控制器</p>
-</div>
 
 
 
@@ -115,200 +111,6 @@
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-        <th>Default</th>
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>controllerName</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last">
-                <p>控制器名称</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>object</code></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    {}
-                
-                </td>
-            
-
-            <td class="description last">
-                <p>操作选项</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>deriveChecker</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code><a href="AjaxArgsChecker.html">AjaxArgsChecker</a></code></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    null
-                
-                </td>
-            
-
-            <td class="description last">
-                <p>派生检测器类</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>deriveState</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>object</code></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    null
-                
-                </td>
-            
-
-            <td class="description last">
-                <p>派生状态对象</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -350,14 +152,323 @@
 
     
 
-    <h4 class="name" id="create"><span class="type-signature"></span>create<span class="signature">(createrCallback)</span><span class="type-signature"> &rarr; {express.Router}</span></h4>
+    <h4 class="name" id=".noop"><span class="type-signature">(static) </span>noop<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
 
     
 
 
 
 <div class="description">
-    <p>控制器创建</p>
+    <p>空方法
+作为可选的回调方法接口，当调用没有传递回调方法时，默认执行的回调方法</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>void</code></span>
+
+
+    </dd>
+</dl>
+
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id=".noopFalse"><span class="type-signature">(static) </span>noopFalse<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>空方法，并返回 false
+作为可选的回调方法接口，当调用没有传递回调方法时，默认执行的回调方法</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>boolean</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>返回false</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id=".noopTrue"><span class="type-signature">(static) </span>noopTrue<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>空方法，并返回 true
+作为可选的回调方法接口，当调用没有传递回调方法时，默认执行的回调方法</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>boolean</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>返回true</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id=".objectUnwind"><span class="type-signature">(static) </span>objectUnwind<span class="signature">(value, prefix, start)</span><span class="type-signature"> &rarr; {object}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>对象展开
+若无法展开则不处理，顶层展开方法执行无法展开值是，返回空对象</p>
 </div>
 
 
@@ -432,13 +543,13 @@
 
         <tr>
             
-                <td class="name"><code>createrCallback</code></td>
+                <td class="name"><code>value</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><code>function</code></span>
+<span class="param-type"><code>object</code></span>
 
 
             
@@ -449,7 +560,59 @@
             
 
             <td class="description last">
-                <p>创建器回调</p>
+                <p>待展开的值</p>
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>prefix</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>prefix</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>展开前缀</p>
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>start</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>object</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>展开后的对象</p>
                 
             </td>
         </tr>
@@ -482,7 +645,7 @@
     </dt>
     <dd>
         
-<span class="param-type"><code>express.Router</code></span>
+<span class="param-type"><code>object</code></span>
 
 
     </dd>
@@ -490,110 +653,7 @@
 
 
 <div class="param-desc">
-    <p>返回路由对象</p>
-</div>
-
-    
-</div>
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="getRouter"><span class="type-signature"></span>getRouter<span class="signature">()</span><span class="type-signature"> &rarr; {express.Router}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>获取 Router 路由对象</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>express.Router</code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>返回路由对象</p>
+    <p>返回展开后的对象，若无法展开则返回空对象</p>
 </div>
 
     

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Controller - Documentation</title>
+    <title>PageInfo - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Controller</h1>
+    <h1 class="page-title">PageInfo</h1>
     
 
     
@@ -42,10 +42,10 @@
 <header>
     
         <h2>
-        Controller
+        PageInfo
         </h2>
         
-            <div class="class-description"><p>控制器基础类</p></div>
+            <div class="class-description"><p>页码对象</p></div>
         
     
 </header>
@@ -60,14 +60,14 @@
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="Controller"><span class="type-signature"></span>new Controller<span class="signature">(controllerName, options<span class="signature-attributes">opt</span>, deriveChecker<span class="signature-attributes">opt</span>, deriveState<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="PageInfo"><span class="type-signature"></span>new PageInfo<span class="signature">(now, size, count)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    <p>创建一个控制器</p>
+    <p>创建一个页码对象</p>
 </div>
 
 
@@ -130,8 +130,6 @@
         <th>Type</th>
 
         
-        <th>Attributes</th>
-        
 
         
         <th>Default</th>
@@ -146,26 +144,18 @@
 
         <tr>
             
-                <td class="name"><code>controllerName</code></td>
+                <td class="name"><code>now</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><code>string</code></span>
+<span class="param-type"><code>number</code></span>
 
 
             
             </td>
 
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
             
 
             
@@ -175,7 +165,7 @@
             
 
             <td class="description last">
-                <p>控制器名称</p>
+                <p>当前页</p>
                 
             </td>
         </tr>
@@ -184,40 +174,28 @@
 
         <tr>
             
-                <td class="name"><code>options</code></td>
+                <td class="name"><code>size</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><code>object</code></span>
+<span class="param-type"><code>number</code></span>
 
 
             
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
                 <td class="default">
-                
-                    {}
                 
                 </td>
             
 
             <td class="description last">
-                <p>操作选项</p>
+                <p>页尺寸</p>
                 
             </td>
         </tr>
@@ -226,82 +204,30 @@
 
         <tr>
             
-                <td class="name"><code>deriveChecker</code></td>
+                <td class="name"><code>count</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><code><a href="AjaxArgsChecker.html">AjaxArgsChecker</a></code></span>
+<span class="param-type"><code>number</code></span>
 
 
             
             </td>
 
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
             
 
             
                 <td class="default">
                 
-                    null
+                    0
                 
                 </td>
             
 
             <td class="description last">
-                <p>派生检测器类</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>deriveState</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>object</code></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    null
-                
-                </td>
-            
-
-            <td class="description last">
-                <p>派生状态对象</p>
+                <p>条目总数量</p>
                 
             </td>
         </tr>
@@ -341,268 +267,6 @@
 
     
 
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="create"><span class="type-signature"></span>create<span class="signature">(createrCallback)</span><span class="type-signature"> &rarr; {express.Router}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>控制器创建</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>createrCallback</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>function</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>创建器回调</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>express.Router</code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>返回路由对象</p>
-</div>
-
-    
-</div>
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="getRouter"><span class="type-signature"></span>getRouter<span class="signature">()</span><span class="type-signature"> &rarr; {express.Router}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>获取 Router 路由对象</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>express.Router</code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>返回路由对象</p>
-</div>
-
-    
-</div>
-
-
-
-</div>
-        
     
 
     
