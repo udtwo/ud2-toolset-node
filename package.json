@@ -1,7 +1,7 @@
 {
 	"name": "ud2-toolset-node",
 	"type": "module",
-	"version": "0.0.13-test.1",
+	"version": "0.0.13-test.2",
 	"description": "ud2 node toolset",
 	"main": "toolset.js",
 	"author": "peak",
@@ -15,7 +15,7 @@
 		"core-js": "^3.9.1",
 		"decimal.js": "^10.2.1",
 		"express": "^4.17.1",
-		"mongodb": "^3.6.5",
+		"mongodb": "^4.1.0",
 		"node-rsa": "^1.1.1",
 		"redis": "^3.1.2",
 		"sharp": "^0.28.3",
